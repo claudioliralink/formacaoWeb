@@ -3,305 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia do formador | Programação Web – Nível Básico</title>
+<meta name="robots" content="noindex">
+<title>Guia do formador | Programação Web</title>
 <link rel="stylesheet" href="../css/materiais.css">
+<link rel="stylesheet" href="../css/acesso.css">
 <script src="../js/tema.js"></script>
 </head>
 <body style="--c: var(--d1)">
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
-    <nav aria-label="Materiais">
-      <a href="../index.html">Plano</a>
-      <a href="exercicios.html">Exercícios</a>
-      <a href="referencia-rapida.html">Referência rápida</a>
-      <a href="guia-formador.html" aria-current="page">Guia do formador</a>
-      <a href="avaliacao-final.html">Teste final</a>
-      <a href="grelha-avaliacao.html">Grelha de avaliação</a>
-      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
-    </nav>
-    <button class="tema-btn" data-tema-botao></button>
+<div class="pwb-cadeado" id="pwb-acesso">
+  <div class="pwb-caixa">
+    <div class="pwb-icone" aria-hidden="true">🧑‍🏫</div>
+    <h1>Guia do formador</h1>
+    <p class="sub">Exclusivo do formador · Programação Web – Nível Básico</p>
+    <p id="pwb-estado" role="status" aria-live="polite">A carregar…</p>
+    <form id="pwb-form" autocomplete="off">
+      <label for="pwb-codigo">Código de acesso</label>
+      <div class="pwb-linha">
+        <input type="password" id="pwb-codigo" autocomplete="off" spellcheck="false">
+        <button class="btn solid" type="submit">Entrar</button>
+      </div>
+      <p class="pwb-msg" id="pwb-msg">Introduza o código do formador.</p>
+    </form>
+    <div class="pwb-rodape"><a href="../index.html">← Voltar ao plano</a><span><a href="#" data-sair>Usar outro código</a> <button class="tema-btn" data-tema-botao></button></span></div>
   </div>
-</header>
-
-<main>
-  <section class="page-head">
-    <div class="wrap">
-      <p class="kicker">🧑‍🏫 Uso interno do formador</p>
-      <h1>Guia do formador</h1>
-      <p class="lead">Preparação, condução e contingências das 5 sessões. Complementa o plano de formação e as notas incluídas em cada apresentação (tecla <kbd>N</kbd>).</p>
-      <ul class="toc">
-        <li><a href="#enquadramento">Enquadramento</a></li>
-        <li><a href="#preparacao">Preparação</a></li>
-        <li><a href="#dias">Condução por dia</a></li>
-        <li><a href="#turma">Gestão da turma</a></li>
-        <li><a href="#contingencias">Contingências</a></li>
-        <li><a href="#conformidade">Segurança e conformidade</a></li>
-        <li><a href="#aceitacao">Critérios de sucesso</a></li>
-        <li><a href="#acesso">Acesso às aulas</a></li>
-      </ul>
-      <div class="actions"><button class="btn" type="button" onclick="window.print()">Imprimir guia</button></div>
-    </div>
-  </section>
-
-  <div class="wrap">
-    <section id="enquadramento">
-      <h2>1. Enquadramento</h2>
-      <div class="table-scroll">
-        <table>
-          <tbody>
-            <tr><th style="width:24%">Objectivo</th><td>Capacitar os formandos a desenvolver páginas web estáticas com HTML, CSS e introdução ao JavaScript, aplicando boas práticas do desenvolvimento web.</td></tr>
-            <tr><th>Âmbito</th><td>Módulos 1 a 6 do programa: Web, HTML5, CSS3, JavaScript introdutório, publicação e projecto final. <strong>Fora do âmbito:</strong> programação no servidor, bases de dados, frameworks e Git na linha de comandos.</td></tr>
-            <tr><th>Carga e formato</th><td>20 horas em 5 dias; sessões de 4 horas (08:00–12:15, com 15 minutos de intervalo). Proporção sugerida: 30% exposição, 70% prática.</td></tr>
-            <tr><th>Público</th><td>Pessoas com conhecimentos básicos de informática e de uso da Internet. Não é necessária experiência em programação.</td></tr>
-            <tr><th>Produto final</th><td>Um website de pelo menos três páginas ou secções, publicado no GitHub Pages e apresentado oralmente.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="preparacao">
-      <h2>2. Preparação</h2>
-      <div class="grid2">
-        <div class="card accent">
-          <h3>Uma semana antes</h3>
-          <ul class="checklist">
-            <li>Confirmar a lista de formandos e enviar a convocatória com horário e local.</li>
-            <li>Confirmar com a área de TI: VS Code e Live Server instalados, ou permissão para instalar.</li>
-            <li>Confirmar que <code>github.com</code>, <code>fonts.googleapis.com</code> e <code>developer.mozilla.org</code> não estão bloqueados na rede.</li>
-            <li>Rever as apresentações e testar todos os exemplos com o botão <em>Ver resultado</em>.</li>
-            <li>Preparar uma conta GitHub de formador para a demonstração do Dia 5.</li>
-            <li>Validar pesos de avaliação e temas com a coordenação pedagógica.</li>
-          </ul>
-        </div>
-        <div class="card accent">
-          <h3>Véspera e primeiro dia</h3>
-          <ul class="checklist">
-            <li>Testar projector, som e resolução (as apresentações adaptam-se a qualquer ecrã).</li>
-            <li>Testar a Internet da sala e identificar uma alternativa (hotspot).</li>
-            <li>Copiar a pasta da formação para uma pen USB (cópia de segurança offline).</li>
-            <li>Confirmar no site publicado que cada aula mostra a contagem decrescente e que o código do formador a desbloqueia.</li>
-            <li>Preparar a folha de presenças e a grelha de observação.</li>
-            <li>Ter a referência rápida impressa (uma por formando) ou partilhada em formato digital.</li>
-          </ul>
-        </div>
-      </div>
-      <h3>Estrutura da pasta da formação</h3>
-      <pre class="code"><code>formacao-web-basico/
-├── index.html                ← plano de formação (ponto de entrada)
-├── apresentacoes/            ← dia-1.html … dia-5.html
-├── exercicios/               ← dia-N/inicio e dia-N/solucao
-├── materiais/                ← exercícios, referência, guia, teste, grelha
-├── projecto-exemplo/         ← website de referência para o Módulo 6
-├── css/  js/                 ← estilos e motor das apresentações
-</code></pre>
-    </section>
-
-    <section id="dias">
-      <h2>3. Condução por dia</h2>
-
-      <div class="card accent" style="--c: var(--d1)">
-        <h3>Dia 1 · Como a Web funciona e a primeira página</h3>
-        <div class="grid2">
-          <div>
-            <h4>Pontos-chave</h4>
-            <ul>
-              <li>A analogia casa (HTML = paredes, CSS = decoração, JS = electricidade) acompanha toda a formação.</li>
-              <li>Os formandos escrevem a estrutura HTML à mão uma vez, antes de conhecerem o atalho <code>!</code> + <kbd>Tab</kbd>.</li>
-              <li>Demonstrar as DevTools num site real: separadores Elements e Network.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Erros frequentes</h4>
-            <ul>
-              <li>Ficheiro guardado como <code>.html.txt</code> (extensões ocultas no Windows).</li>
-              <li>Tags por fechar e aspas em falta nos atributos.</li>
-              <li>Caminho da imagem errado ou com maiúsculas diferentes.</li>
-              <li>Live Server aberto numa pasta diferente da do projecto.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card accent" style="--c: var(--d2)">
-        <h3>Dia 2 · HTML completo e os primeiros estilos</h3>
-        <div class="grid2">
-          <div>
-            <h4>Pontos-chave</h4>
-            <ul>
-              <li>Mostrar que clicar no <code>label</code> coloca o cursor no campo.</li>
-              <li>Insistir: a validação HTML ajuda o utilizador, não protege o sistema.</li>
-              <li>A partir deste dia, usar sempre CSS externo.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Erros frequentes</h4>
-            <ul>
-              <li><code>for</code> do label diferente do <code>id</code> do campo.</li>
-              <li>Botões radio com <code>name</code> diferentes (permitem escolher os dois).</li>
-              <li>Esquecer o <code>.</code> no seletor de classe ou o <code>;</code> no fim da declaração.</li>
-              <li><code>href</code> do CSS errado: página sem estilos.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card accent" style="--c: var(--d3)">
-        <h3>Dia 3 · Layout e design responsivo</h3>
-        <div class="grid2">
-          <div>
-            <h4>Pontos-chave</h4>
-            <ul>
-              <li>Usar o painel <em>Computed</em> das DevTools para tornar o box model visível.</li>
-              <li><code>display: flex</code> aplica-se ao <strong>pai</strong>; os filhos é que se alinham.</li>
-              <li>Mobile-first: CSS do telemóvel primeiro, <code>min-width</code> depois.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Erros frequentes</h4>
-            <ul>
-              <li>Aplicar <code>display: flex</code> aos itens em vez do contentor.</li>
-              <li>Esquecer a meta viewport: a media query “não funciona” no telemóvel.</li>
-              <li>Larguras fixas em píxeis que provocam deslocamento horizontal.</li>
-              <li>Media query escrita antes das regras gerais e por elas anulada.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card accent" style="--c: var(--d4)">
-        <h3>Dia 4 · Interactividade com JavaScript</h3>
-        <div class="grid2">
-          <div>
-            <h4>Pontos-chave</h4>
-            <ul>
-              <li>Começar na consola: <code>2 + 2</code>, <code>"Olá" + " mundo"</code>.</li>
-              <li>Ensinar a ler a mensagem de erro e a linha indicada na consola.</li>
-              <li>Fechar o dia com o briefing do projecto e pedir o tema a cada formando.</li>
-              <li>Trabalho de casa: criar a conta pessoal no GitHub.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Erros frequentes</h4>
-            <ul>
-              <li><code>queryselector</code> em vez de <code>querySelector</code>.</li>
-              <li>Script sem <code>defer</code> no <code>head</code>: <code>null</code> ao seleccionar elementos.</li>
-              <li><code>#</code> em falta no seletor de id.</li>
-              <li><code>if (x = 5)</code> em vez de <code>===</code>; <code>"2" + 2</code> a dar <code>"22"</code>.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card accent" style="--c: var(--d5)">
-        <h3>Dia 5 · Publicação e projecto final</h3>
-        <div class="grid2">
-          <div>
-            <h4>Pontos-chave</h4>
-            <ul>
-              <li>Fazer a publicação completa no projector antes de os formandos começarem.</li>
-              <li>Mostrar o <a href="../projecto-exemplo/index.html">projecto exemplo</a> como referência do resultado esperado, sem o apresentar como modelo a copiar.</li>
-              <li>Incentivar uma primeira publicação até às 10:00 e actualizações depois.</li>
-              <li>Controlar o tempo das apresentações: cerca de 5 minutos por formando.</li>
-            </ul>
-          </div>
-          <div>
-            <h4>Erros frequentes</h4>
-            <ul>
-              <li>Carregar a pasta em vez do seu conteúdo: <code>index.html</code> fica fora da raiz (erro 404).</li>
-              <li><code>Index.html</code> com maiúscula.</li>
-              <li>Caminhos absolutos do computador (<code>C:\Users\…</code>).</li>
-              <li>Esperar pela publicação: pode demorar alguns minutos; recarregar com <kbd>Ctrl</kbd> + <kbd>F5</kbd>.</li>
-            </ul>
-          </div>
-        </div>
-        <p class="callout warn">Com mais de 9 formandos, os 45 minutos de apresentações não chegam. Reduza para 3 minutos por pessoa ou peça à coordenação mais 30 minutos.</p>
-      </div>
-    </section>
-
-    <section id="turma">
-      <h2>4. Gestão da turma</h2>
-      <div class="grid3">
-        <div class="card"><h3>Ritmos diferentes</h3><p>Todos os exercícios têm um nível base e um desafio extra. Formandos que terminam cedo apoiam colegas ou avançam no projecto.</p></div>
-        <div class="card"><h3>Ciclo de cada conceito</h3><p>Explicar (5 min) → demonstrar ao vivo (5 min) → praticar (10–15 min) → corrigir em conjunto (5 min).</p></div>
-        <div class="card"><h3>Pedido de ajuda</h3><p>Antes de chamar o formador: ler o erro na consola, comparar com o exemplo do diapositivo, perguntar ao colega do lado.</p></div>
-      </div>
-      <h3>Diferenciação</h3>
-      <ul>
-        <li><strong>Com mais dificuldade:</strong> trabalhar a partir das pastas <code>inicio</code>, que já têm a estrutura; foco nos critérios mínimos.</li>
-        <li><strong>Mais avançados:</strong> desafios extra, acessibilidade (contraste, navegação por teclado), uma segunda interacção em JavaScript.</li>
-      </ul>
-    </section>
-
-    <section id="contingencias">
-      <h2>5. Contingências e plano alternativo</h2>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th>Situação</th><th>Impacto</th><th>Resposta</th></tr></thead>
-          <tbody>
-            <tr><td>Sem Internet na sala</td><td>Fontes externas e GitHub indisponíveis</td><td>As apresentações e exercícios funcionam offline (as fontes passam para as do sistema). Adiar a publicação; o formando publica até prazo definido e envia o link.</td></tr>
-            <tr><td>Sem permissão para instalar o VS Code</td><td>Sem editor adequado</td><td>Usar o Bloco de Notas com o navegador, ou um editor online (ex.: CodePen) se a política da organização o permitir.</td></tr>
-            <tr><td>Formando sem e-mail pessoal para o GitHub</td><td>Não consegue publicar</td><td>Criar um e-mail pessoal no Dia 4 (com o próprio formando) ou entregar o projecto em pasta ZIP; a publicação é avaliada como “não cumprida” apenas nesse critério.</td></tr>
-            <tr><td>Atraso acumulado no programa</td><td>Dia 5 comprometido</td><td>Reduzir a revisão inicial dos dias 3 e 4; o Exercício 3 pode servir de base ao projecto final.</td></tr>
-            <tr><td>Falha de um computador</td><td>Perda de trabalho</td><td>Guardar o trabalho numa pen ou na nuvem no fim de cada dia; trabalho em pares temporário.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section id="conformidade">
-      <h2>6. Segurança da informação e conformidade</h2>
-      <ul>
-        <li>Cada formando cria e gere a sua conta GitHub. O formador <strong>nunca</strong> pede, vê ou introduz palavras-passe.</li>
-        <li>Os projectos publicados são públicos: não incluir moradas, números de telefone ou documentos reais de terceiros sem autorização. Nos exemplos, usar dados fictícios (<code>exemplo.ao</code>, <code>+244 900 000 000</code>).</li>
-        <li>Usar apenas imagens próprias, ilustrações criadas pelos formandos ou bancos livres de direitos, indicando a origem quando exigido.</li>
-        <li>As fotografias dos formandos no Exercício 1 são opcionais; um avatar é suficiente.</li>
-        <li>Os dados de avaliação (grelhas e notas) são tratados apenas pela entidade formadora, segundo as suas regras de protecção de dados.</li>
-      </ul>
-    </section>
-
-    <section id="aceitacao">
-      <h2>7. Critérios de sucesso da formação</h2>
-      <p class="muted">Indicadores propostos, a validar com a coordenação pedagógica.</p>
-      <div class="table-scroll">
-        <table>
-          <thead><tr><th>Indicador</th><th>Meta proposta</th><th>Evidência</th></tr></thead>
-          <tbody>
-            <tr><td>Assiduidade</td><td>≥ 90% das horas</td><td>Folha de presenças</td></tr>
-            <tr><td>Exercícios entregues</td><td>≥ 3 de 4 por formando</td><td>Pastas dos exercícios</td></tr>
-            <tr><td>Projectos publicados</td><td>≥ 80% dos formandos</td><td>Links do GitHub Pages</td></tr>
-            <tr><td>Teste final</td><td>Média ≥ 70%</td><td><a href="avaliacao-final.html">Teste final</a></td></tr>
-            <tr><td>Satisfação</td><td>≥ 4 em 5</td><td>Questionário de avaliação da formação</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-    <section id="acesso">
-      <h2>8. Acesso às aulas (libertação diária)</h2>
-      <p>No site publicado, a apresentação e os ficheiros do exercício de cada dia estão cifrados e abrem sozinhos às <strong>07:30 (hora de Luanda)</strong> do respectivo dia: Dia 1 a 12/10, Dia 2 a 13/10, Dia 3 a 14/10, Dia 4 a 15/10 e Dia 5 a 16/10. O plano, a referência rápida, os materiais e o projecto exemplo estão sempre acessíveis.</p>
-      <div class="grid2">
-        <div class="card accent">
-          <h3>Código do formador</h3>
-          <ul>
-            <li>Desbloqueia qualquer aula a qualquer momento (para preparar a sessão ou em caso de falha).</li>
-            <li>É pessoal: não o partilhe com os formandos, porque abre todos os dias de uma só vez.</li>
-            <li>Introduza-o no campo “Código do formador” da página bloqueada. Fica válido até fechar o separador.</li>
-          </ul>
-        </div>
-        <div class="card accent">
-          <h3>Se a aula não abrir às 07:30</h3>
-          <ol>
-            <li>Aguarde alguns minutos: o GitHub pode atrasar as tarefas agendadas; a página tenta de novo sozinha a cada minuto.</li>
-            <li>No repositório, abra <strong>Actions &gt; Publicar site e libertar aulas &gt; Run workflow</strong>. A tarefa só liberta aulas cuja data já chegou.</li>
-            <li>Em último caso, projecte a aula com o código do formador.</li>
-          </ol>
-        </div>
-      </div>
-      <p class="small">Instruções completas de publicação: ficheiro <code>PUBLICAR.md</code> na pasta da formação (cópia do formador, não publicada).</p>
-    </section>
-  </div>
-</main>
-
-<footer class="site"><div class="wrap">Programação Web – Nível Básico · Guia do formador</div></footer>
+</div>
+<script id="pwb-dados" type="application/json">{"cfg":{"iteracoes":310000,"salFormador":"3IUnCfdUrkoj0mb8NwJ5lA==","salTurma":"ki5wd7Ja5ZSEPc4vcy+Hlg==","verifFormador":{"iv":"oxq0KvoijezgppIy","dados":"v6T9IusFw3ywiQIxkjJSRwjrbHQp/Qk0"},"verifTurma":{"iv":"WwYnoOmrkERSoIke","dados":"daLPn6QB459E1FiEyhXQAeKRtnARs8NT"}},"chaveFormador":{"iv":"uhl5s0m2337T78Fu","chave":"d/FT/7m6e8IE2mEAindNa8sqjI7K0D1Kr4kw+Cuu7DTSDIy/F/0UkgSY6oQbdHAF"},"formador":{"iv":"snku+Ae3xtTNtO29","dados":"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"}}</script>
+<script src="../js/cofre.js"></script>
+<script src="../js/acesso.js"></script>
 </body>
 </html>

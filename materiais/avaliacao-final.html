@@ -6,6 +6,7 @@
 <title>Teste final | Programação Web – Nível Básico</title>
 <link rel="stylesheet" href="../css/materiais.css">
 <script src="../js/tema.js"></script>
+<script src="../js/cofre.js"></script>
 <style>
   .q { background: var(--white); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 1rem; box-shadow: var(--shadow); break-inside: avoid; }
   .q legend { font-weight: 700; padding: 0; margin-bottom: .6rem; display: flex; gap: .6rem; }
@@ -63,7 +64,7 @@
       <p class="lead">20 perguntas de escolha múltipla sobre os seis módulos. Cada pergunta tem uma só resposta correcta. Duração sugerida: 20 minutos.</p>
       <div class="actions">
         <button class="btn" type="button" onclick="window.print()">Imprimir enunciado</button>
-        <button class="btn" type="button" id="toggle-key" aria-pressed="false">Mostrar chave de respostas (formador)</button>
+        <a class="btn" href="#area-formador">Área do formador</a>
       </div>
     </div>
   </section>
@@ -76,16 +77,41 @@
 
     <form id="teste" novalidate></form>
 
-    <div class="key card accent">
-      <h2 style="margin-top:0">Chave de respostas</h2>
-      <p id="key-list" class="muted"></p>
-      <p class="small">Classificação proposta: 1 ponto por resposta certa (máximo 20). Aprovação sugerida: 14 ou mais (70%).</p>
+    <!-- Formando: código de respostas para entregar ao formador -->
+    <div class="card accent no-print" id="resumo" hidden>
+      <h2 style="margin-top:0">O seu código de respostas</h2>
+      <p>Entregue este código ao formador (copie-o para a plataforma indicada ou mostre-o no ecrã). A correcção é feita pelo formador.</p>
+      <pre class="code"><code id="codigo-respostas"></code></pre>
+      <div class="actions"><button class="btn solid" type="button" id="copiar-codigo">Copiar código</button></div>
     </div>
+
+    <!-- Formador: chave, correcção e corrector de códigos -->
+    <section class="card accent no-print" id="area-formador">
+      <h2 style="margin-top:0">🔐 Área do formador</h2>
+      <form id="form-formador" class="cofre-form">
+        <p class="muted">A chave de respostas e a correcção só ficam visíveis com o código do formador.</p>
+        <label for="codigo-formador" style="font-weight:700">Código do formador</label>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.3rem">
+          <input type="password" id="codigo-formador" autocomplete="off" spellcheck="false" style="flex:1;min-width:200px;font:inherit;padding:.55rem .8rem;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)">
+          <button class="btn solid" type="submit">Desbloquear</button>
+        </div>
+        <p id="msg-formador" class="small" style="margin-top:.5rem"></p>
+      </form>
+      <div id="painel-formador" hidden>
+        <h3>Chave de respostas</h3>
+        <p id="key-list" class="muted"></p>
+        <p class="small">Classificação proposta: 1 ponto por resposta certa (máximo 20). Aprovação sugerida: 14 ou mais (70%). Neste modo, o botão "Corrigir teste" corrige as respostas marcadas nesta página.</p>
+        <h3>Corrigir o código de respostas de um formando</h3>
+        <textarea id="codigos-formandos" rows="3" placeholder="Cole aqui um código, por exemplo 1b-2d-3a-…" style="width:100%;font-family:var(--mono);font-size:.9rem;padding:.6rem .8rem;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)"></textarea>
+        <div class="actions" style="margin-top:.6rem"><button class="btn solid" type="button" id="corrigir-codigo">Corrigir código</button></div>
+        <p id="resultado-codigo" style="margin-top:.8rem;font-weight:700"></p>
+      </div>
+    </section>
 
     <div class="result no-print" role="status" aria-live="polite">
       <span class="score" id="score">0 de 20 respondidas</span>
       <span style="display:flex;gap:.5rem;flex-wrap:wrap">
-        <button class="btn solid" type="button" id="corrigir">Corrigir teste</button>
+        <button class="btn solid" type="button" id="corrigir">Terminar teste</button>
         <button class="btn" type="button" id="limpar">Recomeçar</button>
       </span>
     </div>
@@ -94,87 +120,76 @@
 
 <footer class="site"><div class="wrap">Programação Web – Nível Básico · Teste final</div></footer>
 
+<script id="pwb-teste" type="application/json">{"cfg":{"iteracoes":310000,"salFormador":"3IUnCfdUrkoj0mb8NwJ5lA==","salTurma":"ki5wd7Ja5ZSEPc4vcy+Hlg==","verifFormador":{"iv":"oxq0KvoijezgppIy","dados":"v6T9IusFw3ywiQIxkjJSRwjrbHQp/Qk0"},"verifTurma":{"iv":"WwYnoOmrkERSoIke","dados":"daLPn6QB459E1FiEyhXQAeKRtnARs8NT"}},"chaveFormador":{"iv":"uhl5s0m2337T78Fu","chave":"d/FT/7m6e8IE2mEAindNa8sqjI7K0D1Kr4kw+Cuu7DTSDIy/F/0UkgSY6oQbdHAF"},"formador":{"iv":"m4vcwBrZs6Xh4Gu+","dados":"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"}}</script>
 <script>
 /* Perguntas: texto, módulo, opções, índice da correcta (0 = a) e explicação */
 const perguntas = [
   { m: "Módulo 1", t: "Qual é a diferença entre a Internet e a Web?",
-    o: ["São a mesma coisa com nomes diferentes.", "A Internet é a rede física; a Web é um serviço de páginas que funciona sobre ela.", "A Web é a rede física; a Internet é o navegador.", "A Internet só existe em computadores; a Web só em telemóveis."],
-    c: 1, e: "A Internet é a infra-estrutura de rede; a Web é um dos serviços que a usam, tal como o e-mail." },
+    o: ["São a mesma coisa com nomes diferentes.", "A Internet é a rede física; a Web é um serviço de páginas que funciona sobre ela.", "A Web é a rede física; a Internet é o navegador.", "A Internet só existe em computadores; a Web só em telemóveis."] },
   { m: "Módulo 1", t: "No modelo cliente-servidor, quem é normalmente o cliente?",
-    o: ["O navegador do utilizador.", "O servidor de alojamento.", "O DNS.", "O editor de código."],
-    c: 0, e: "O navegador faz o pedido (cliente) e o servidor responde com os ficheiros." },
+    o: ["O navegador do utilizador.", "O servidor de alojamento.", "O DNS.", "O editor de código."] },
   { m: "Módulo 1", t: "O que faz o DNS?",
-    o: ["Desenha a página no ecrã.", "Guarda as palavras-passe dos sites.", "Traduz um nome de domínio num endereço IP.", "Comprime as imagens."],
-    c: 2, e: "O DNS funciona como uma lista telefónica: converte www.exemplo.ao no endereço IP do servidor." },
+    o: ["Desenha a página no ecrã.", "Guarda as palavras-passe dos sites.", "Traduz um nome de domínio num endereço IP.", "Comprime as imagens."] },
   { m: "Módulo 1", t: "O código de resposta 404 significa:",
-    o: ["Página entregue com sucesso.", "Página não encontrada.", "Erro interno do servidor.", "Página movida para outro endereço."],
-    c: 1, e: "200 = OK, 301 = movido, 404 = não encontrado, 500 = erro do servidor." },
+    o: ["Página entregue com sucesso.", "Página não encontrada.", "Erro interno do servidor.", "Página movida para outro endereço."] },
   { m: "Módulo 2", t: "Onde se coloca o conteúdo visível de uma página HTML?",
-    o: ["Dentro de <head>.", "Dentro de <title>.", "Dentro de <body>.", "Antes de <!DOCTYPE html>."],
-    c: 2, e: "O <head> contém informação sobre a página; o que aparece no ecrã vai no <body>." },
+    o: ["Dentro de <head>.", "Dentro de <title>.", "Dentro de <body>.", "Antes de <!DOCTYPE html>."] },
   { m: "Módulo 2", t: "Qual destas linhas cria correctamente uma imagem acessível?",
-    o: ['<img href="logo.png">', '<img src="logo.png" alt="Logótipo da empresa">', '<image src="logo.png">', '<img alt="logo.png">'],
-    c: 1, e: "O atributo src indica o ficheiro e o alt descreve a imagem para quem não a vê." },
+    o: ['<img href="logo.png">', '<img src="logo.png" alt="Logótipo da empresa">', '<image src="logo.png">', '<img alt="logo.png">'] },
   { m: "Módulo 2", t: "Que elemento usaria para os passos de uma receita, em que a ordem importa?",
-    o: ["<ul>", "<ol>", "<table>", "<nav>"],
-    c: 1, e: "<ol> cria uma lista numerada; <ul> é para itens sem ordem." },
+    o: ["<ul>", "<ol>", "<table>", "<nav>"] },
   { m: "Módulo 2", t: "Para que serve o atributo for de um <label>?",
-    o: ["Para repetir o campo várias vezes.", "Para ligar o label ao campo com o mesmo id.", "Para tornar o campo obrigatório.", "Para definir a cor do texto."],
-    c: 1, e: "Com for e id iguais, clicar no label coloca o cursor no campo e os leitores de ecrã anunciam o nome correcto." },
+    o: ["Para repetir o campo várias vezes.", "Para ligar o label ao campo com o mesmo id.", "Para tornar o campo obrigatório.", "Para definir a cor do texto."] },
   { m: "Módulo 2", t: "Qual atributo torna um campo de formulário obrigatório?",
-    o: ["needed", "pattern", "required", "validate"],
-    c: 2, e: "required impede o envio enquanto o campo estiver vazio." },
+    o: ["needed", "pattern", "required", "validate"] },
   { m: "Módulo 2", t: "Que elemento semântico deve conter o menu de navegação?",
-    o: ["<nav>", "<aside>", "<article>", "<div>"],
-    c: 0, e: "<nav> identifica o bloco de navegação principal." },
+    o: ["<nav>", "<aside>", "<article>", "<div>"] },
   { m: "Módulo 3", t: "Qual é a forma recomendada de aplicar CSS a um site com várias páginas?",
-    o: ["Estilos inline em cada elemento.", "Um bloco <style> em cada página.", "Um ficheiro externo ligado com <link rel=\"stylesheet\">.", "Atributos de cor no HTML."],
-    c: 2, e: "Um ficheiro externo serve todas as páginas e facilita a manutenção." },
+    o: ["Estilos inline em cada elemento.", "Um bloco <style> em cada página.", "Um ficheiro externo ligado com <link rel=\"stylesheet\">.", "Atributos de cor no HTML."] },
   { m: "Módulo 3", t: "Que seletor CSS escolhe os elementos com class=\"destaque\"?",
-    o: ["#destaque", ".destaque", "destaque", "*destaque"],
-    c: 1, e: "O ponto selecciona classes; o cardinal (#) selecciona ids." },
+    o: ["#destaque", ".destaque", "destaque", "*destaque"] },
   { m: "Módulo 3", t: "Uma caixa tem width: 200px, padding: 10px e border: 5px, sem box-sizing: border-box. Qual é a largura total ocupada (sem margin)?",
-    o: ["200px", "215px", "230px", "250px"],
-    c: 2, e: "200 + 10 + 10 + 5 + 5 = 230px. Com border-box, seriam 200px." },
+    o: ["200px", "215px", "230px", "250px"] },
   { m: "Módulo 3", t: "Num contentor flex com a direcção por omissão, que propriedade distribui os itens na horizontal?",
-    o: ["align-items", "justify-content", "text-align", "float"],
-    c: 1, e: "justify-content trabalha no eixo principal (horizontal em row)." },
+    o: ["align-items", "justify-content", "text-align", "float"] },
   { m: "Módulo 3", t: "O que faz grid-template-columns: repeat(3, 1fr)?",
-    o: ["Cria três linhas de altura igual.", "Cria três colunas de largura igual.", "Repete o elemento três vezes.", "Cria uma coluna com 3 píxeis."],
-    c: 1, e: "1fr é uma fracção do espaço livre; repeat(3, 1fr) dá três colunas iguais." },
+    o: ["Cria três linhas de altura igual.", "Cria três colunas de largura igual.", "Repete o elemento três vezes.", "Cria uma coluna com 3 píxeis."] },
   { m: "Módulo 3", t: "Numa abordagem mobile-first, que media query acrescenta regras para ecrãs maiores?",
-    o: ["@media (max-width: 600px)", "@media (min-width: 600px)", "@media print", "@media (orientation: portrait)"],
-    c: 1, e: "Escreve-se primeiro o CSS do telemóvel e depois min-width para ecrãs a partir de certa largura." },
+    o: ["@media (max-width: 600px)", "@media (min-width: 600px)", "@media print", "@media (orientation: portrait)"] },
   { m: "Módulo 4", t: "Qual é o resultado de 5 === \"5\" em JavaScript?",
-    o: ["true", "false", "\"55\"", "Erro"],
-    c: 1, e: "=== compara valor e tipo: um é número e o outro é texto." },
+    o: ["true", "false", "\"55\"", "Erro"] },
   { m: "Módulo 4", t: "Qual a diferença entre let e const?",
-    o: ["let só guarda texto; const só guarda números.", "O valor de let pode ser alterado; o de const não.", "const é a forma antiga; let é a moderna.", "Não há diferença."],
-    c: 1, e: "Use const por omissão e let quando o valor tiver de mudar." },
+    o: ["let só guarda texto; const só guarda números.", "O valor de let pode ser alterado; o de const não.", "const é a forma antiga; let é a moderna.", "Não há diferença."] },
   { m: "Módulo 4", t: "Para que serve evento.preventDefault() num evento submit?",
-    o: ["Para apagar o formulário.", "Para impedir o envio normal e o recarregamento da página.", "Para enviar o formulário duas vezes.", "Para mostrar a consola."],
-    c: 1, e: "Assim o JavaScript pode validar os dados antes de decidir o que fazer." },
+    o: ["Para apagar o formulário.", "Para impedir o envio normal e o recarregamento da página.", "Para enviar o formulário duas vezes.", "Para mostrar a consola."] },
   { m: "Módulo 5", t: "Ao publicar no GitHub Pages, o site mostra erro 404. Qual é a causa mais provável?",
-    o: ["O CSS tem uma cor errada.", "O ficheiro index.html não está na raiz do repositório ou tem maiúsculas (Index.html).", "Faltam comentários no código.", "O navegador é antigo."],
-    c: 1, e: "O GitHub Pages procura index.html, em minúsculas, na raiz (ou na pasta configurada)." }
+    o: ["O CSS tem uma cor errada.", "O ficheiro index.html não está na raiz do repositório ou tem maiúsculas (Index.html).", "Faltam comentários no código.", "O navegador é antigo."] }
 ];
 
 /* Baralha as opções de forma fixa (sempre a mesma ordem), para equilibrar a posição
-   da resposta certa e manter o enunciado impresso igual à chave de respostas. */
+   da resposta certa e manter o enunciado impresso igual à chave de respostas.
+   p.perm[posição mostrada] = posição original da opção. */
 let semente = 100;
 function aleatorio() { semente = (semente * 9301 + 49297) % 233280; return semente / 233280; }
 perguntas.forEach(p => {
-  const certa = p.o[p.c];
+  const perm = [0, 1, 2, 3];
   for (let k = p.o.length - 1; k > 0; k--) {
     const r = Math.floor(aleatorio() * (k + 1));
     [p.o[k], p.o[r]] = [p.o[r], p.o[k]];
+    [perm[k], perm[r]] = [perm[r], perm[k]];
   }
-  p.c = p.o.indexOf(certa);
+  p.perm = perm;
 });
+
+/* Chave de respostas: disponível no ficheiro original do formador; no site publicado
+   chega cifrada e só abre com o código do formador. */
+let CHAVE = perguntas.every(p => p.c !== undefined) ? { c: perguntas.map(p => p.c), e: perguntas.map(p => p.e) } : null;
+const certa = i => perguntas[i].perm.indexOf(CHAVE.c[i]);
 
 const letras = ["a", "b", "c", "d"];
 const form = document.getElementById("teste");
 const score = document.getElementById("score");
+const btnCorrigir = document.getElementById("corrigir");
 
 /* Constrói o teste */
 perguntas.forEach((p, i) => {
@@ -201,41 +216,47 @@ perguntas.forEach((p, i) => {
     fs.append(lab);
   });
   const ex = document.createElement("p");
-  ex.className = "explain"; ex.hidden = true; ex.textContent = p.e;
+  ex.className = "explain"; ex.hidden = true;
   fs.append(ex);
   box.append(fs);
   form.append(box);
 });
 
-/* Chave de respostas */
-document.getElementById("key-list").textContent =
-  perguntas.map((p, i) => (i + 1) + " – " + letras[p.c]).join(" · ");
-const tk = document.getElementById("toggle-key");
-tk.addEventListener("click", () => {
-  const on = document.body.classList.toggle("show-key");
-  tk.setAttribute("aria-pressed", String(on));
-  tk.textContent = on ? "Esconder chave de respostas" : "Mostrar chave de respostas (formador)";
-});
+/* Modo formador: mostra a chave e passa a corrigir */
+function activarFormador() {
+  document.getElementById("form-formador").hidden = true;
+  document.getElementById("painel-formador").hidden = false;
+  document.getElementById("key-list").textContent = perguntas.map((p, i) => (i + 1) + " – " + letras[certa(i)]).join(" · ");
+  form.querySelectorAll(".explain").forEach((e, i) => e.textContent = CHAVE.e[i]);
+  btnCorrigir.textContent = "Corrigir teste";
+}
 
 /* Contagem de respostas */
-function respondidas() {
-  return perguntas.filter((_, i) => form.querySelector('input[name="q' + i + '"]:checked')).length;
-}
+function resposta(i) { const r = form.querySelector('input[name="q' + i + '"]:checked'); return r ? Number(r.value) : -1; }
+function respondidas() { return perguntas.filter((_, i) => resposta(i) >= 0).length; }
 form.addEventListener("change", () => {
   if (!form.classList.contains("corrigido")) score.textContent = respondidas() + " de 20 respondidas";
 });
 
-/* Correcção */
-document.getElementById("corrigir").addEventListener("click", () => {
+/* Terminar (formando) ou corrigir (formador) */
+btnCorrigir.addEventListener("click", () => {
+  if (!CHAVE) {
+    const codigo = perguntas.map((_, i) => (i + 1) + (resposta(i) >= 0 ? letras[resposta(i)] : "x")).join("-");
+    document.getElementById("codigo-respostas").textContent = codigo;
+    document.getElementById("resumo").hidden = false;
+    score.textContent = respondidas() + " de 20 respondidas · código gerado";
+    document.getElementById("resumo").scrollIntoView({ behavior: "smooth" });
+    return;
+  }
   let certas = 0;
   perguntas.forEach((p, i) => {
     const opts = form.querySelectorAll('input[name="q' + i + '"]');
     opts.forEach((inp, j) => {
       const lab = inp.closest(".opt");
       lab.classList.remove("right", "wrong");
-      if (j === p.c) lab.classList.add("right");
-      if (inp.checked && j !== p.c) lab.classList.add("wrong");
-      if (inp.checked && j === p.c) certas++;
+      if (j === certa(i)) lab.classList.add("right");
+      if (inp.checked && j !== certa(i)) lab.classList.add("wrong");
+      if (inp.checked && j === certa(i)) certas++;
       inp.disabled = true;
     });
     opts[0].closest("fieldset").querySelector(".explain").hidden = false;
@@ -246,14 +267,59 @@ document.getElementById("corrigir").addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+document.getElementById("copiar-codigo").addEventListener("click", async e => {
+  try { await navigator.clipboard.writeText(document.getElementById("codigo-respostas").textContent); e.target.textContent = "Copiado"; }
+  catch (err) { e.target.textContent = "Seleccione e copie manualmente"; }
+  setTimeout(() => e.target.textContent = "Copiar código", 1800);
+});
+
+/* Corrector de códigos de respostas (formador) */
+document.getElementById("corrigir-codigo").addEventListener("click", () => {
+  const txt = document.getElementById("codigos-formandos").value;
+  const resp = {};
+  (txt.match(/(\d{1,2})\s*([a-dx])/gi) || []).forEach(m => { const n = parseInt(m, 10); resp[n] = m.slice(-1).toLowerCase(); });
+  const total = Object.keys(resp).length;
+  const out = document.getElementById("resultado-codigo");
+  if (!total) { out.textContent = "Código não reconhecido."; return; }
+  let certas = 0; const erradas = [];
+  perguntas.forEach((_, i) => { if (resp[i + 1] === letras[certa(i)]) certas++; else erradas.push(i + 1); });
+  const pct = Math.round(certas / 20 * 100);
+  out.textContent = certas + " / 20 (" + pct + "%) – " + (pct >= 70 ? "Aprovado" : "Rever os conteúdos") + (erradas.length ? ". Erradas ou em branco: " + erradas.join(", ") : ".");
+});
+
 document.getElementById("limpar").addEventListener("click", () => {
   form.reset();
   form.classList.remove("corrigido");
   form.querySelectorAll(".opt").forEach(l => l.classList.remove("right", "wrong"));
   form.querySelectorAll("input").forEach(i => i.disabled = false);
   form.querySelectorAll(".explain").forEach(e => e.hidden = true);
+  document.getElementById("resumo").hidden = true;
   score.textContent = "0 de 20 respondidas";
 });
+
+/* Desbloqueio da área do formador */
+const dadosCofre = document.getElementById("pwb-teste");
+async function abrirChave(kek) {
+  const D = JSON.parse(dadosCofre.textContent);
+  const chave = await PWBCofre.desembrulhar(kek, D.chaveFormador);
+  CHAVE = await PWBCofre.abrir(chave, D.formador);
+  activarFormador();
+}
+if (CHAVE) {
+  activarFormador();      /* ficheiro original (não publicado): chave já disponível */
+} else if (dadosCofre && window.PWBCofre && PWBCofre.disponivel) {
+  const kf = PWBCofre.obter("formador");
+  if (kf) abrirChave(kf).catch(() => PWBCofre.esquecer());
+  document.getElementById("form-formador").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const campo = document.getElementById("codigo-formador"), msg = document.getElementById("msg-formador");
+    msg.textContent = "A verificar…";
+    const papel = await PWBCofre.identificar(campo.value, JSON.parse(dadosCofre.textContent).cfg);
+    campo.value = "";
+    if (papel === "formador") { msg.textContent = ""; try { await abrirChave(PWBCofre.obter("formador")); } catch (e) { msg.textContent = "Erro ao abrir a chave."; } }
+    else msg.textContent = papel === "turma" ? "Este é o código da turma. A área do formador exige o código do formador." : "Código incorrecto.";
+  });
+}
 </script>
 </body>
 </html>

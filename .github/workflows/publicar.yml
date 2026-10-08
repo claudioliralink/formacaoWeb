@@ -1,6 +1,6 @@
 # Publica o site no GitHub Pages e liberta as aulas na data/hora prevista.
-# As chaves das aulas estão no segredo CHAVES_AULAS (Settings > Secrets and variables > Actions).
-# Nunca ficam guardadas no repositório: só são escritas no site publicado quando a data chega.
+# O segredo CHAVES_AULAS (Settings > Secrets and variables > Actions) contém as chaves
+# das aulas já cifradas com o código da turma. Nunca ficam guardadas no repositório.
 name: Publicar site e libertar aulas
 
 on:

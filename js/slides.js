@@ -57,7 +57,11 @@
   bNotes.setAttribute("aria-pressed", "false");
   const bTema = make("button", "tema-btn");
   bTema.setAttribute("data-tema-botao", "");
-  bar.append(plan, prev, next, title, count, bIdx, bNotes, bFull, bTema);
+  /* O botão das notas só aparece quando a apresentação tem notas (versão do formador) */
+  const temNotas = !!document.querySelector("aside.notes");
+  bar.append(plan, prev, next, title, count, bIdx);
+  if (temNotas) bar.append(bNotes);
+  bar.append(bFull, bTema);
   if (window.PWBTema) window.PWBTema.ligarBotoes();
   document.body.append(bar);
 
@@ -115,7 +119,7 @@
       case "Home": go(0); break;
       case "End": go(total - 1); break;
       case "i": case "I": toggleIndex(); break;
-      case "n": case "N": toggleNotes(); break;
+      case "n": case "N": if (temNotas) toggleNotes(); break;
       case "f": case "F": toggleFull(); break;
       case "t": case "T": if (window.PWBTema) window.PWBTema.alternar(); break;
       case "Escape": toggleIndex(false); toggleNotes(false); break;

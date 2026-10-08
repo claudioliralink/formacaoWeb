@@ -1,0 +1,42 @@
+# Publica o site no GitHub Pages e liberta as aulas na data/hora prevista.
+# As chaves das aulas estão no segredo CHAVES_AULAS (Settings > Secrets and variables > Actions).
+# Nunca ficam guardadas no repositório: só são escritas no site publicado quando a data chega.
+name: Publicar site e libertar aulas
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 06:30 UTC = 07:30 em Luanda, de 12 a 16 de Outubro. As repetições cobrem atrasos do GitHub.
+    - cron: "30 6 12-16 10 *"
+    - cron: "45 6 12-16 10 *"
+    - cron: "0 7 12-16 10 *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Libertar as aulas cuja data já chegou
+        env:
+          CHAVES_AULAS: ${{ secrets.CHAVES_AULAS }}
+        run: node ferramentas-site/libertar.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@v4

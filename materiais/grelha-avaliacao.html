@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grelha de avaliação | Programação Web – Nível Básico</title>
+<link rel="stylesheet" href="../css/materiais.css">
+<script src="../js/tema.js"></script>
+<style>
+  .rubric td { font-size: .86rem; }
+  .rubric th:first-child { width: 20%; }
+  .rubric td.lv { cursor: pointer; border-left: 1px solid var(--line); transition: background .12s; }
+  .rubric td.lv:hover { background: var(--paper); }
+  .rubric td.lv.sel { background: color-mix(in srgb, var(--c) 18%, var(--white)); box-shadow: inset 0 0 0 2px var(--c); }
+  .rubric .w { display: block; font-family: var(--mono); font-size: .8rem; color: var(--muted); font-weight: 600; }
+  .lvh { font-family: var(--mono); font-size: .78rem; display: block; color: var(--muted); }
+  .calc { display: grid; grid-template-columns: repeat(3, 1fr) 1.2fr; gap: 1rem; align-items: end; }
+  .calc label { font-weight: 600; font-size: .9rem; display: flex; flex-direction: column; gap: .3rem; }
+  .calc input { font: inherit; padding: .55rem .8rem; border-radius: 12px; border: 1px solid var(--line); background: var(--white); width: 100%; }
+  .big { font-size: 2.2rem; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+  .final { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 1rem 1.2rem; }
+  .final .small { color: #C9CDE0; }
+  :root[data-tema="escuro"] .final { background: #262C44; box-shadow: 0 0 0 1px var(--line); }
+  .obs td, .obs th { font-size: .82rem; text-align: center; }
+  .obs td:first-child, .obs th:first-child { text-align: left; width: 26%; }
+  .obs td { height: 2.1rem; }
+  @media (max-width: 760px) { .calc { grid-template-columns: 1fr 1fr; } }
+  @media print {
+    .rubric td.lv.sel { box-shadow: none; outline: 2px solid var(--ink); }
+    .calc input { border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; }
+    .final { background: #fff; color: var(--ink); border: 1px solid var(--ink); }
+    .final .small { color: var(--muted); }
+    #observacao { break-before: page; }
+  }
+</style>
+</head>
+<body style="--c: var(--d4)">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
+    <nav aria-label="Materiais">
+      <a href="../index.html">Plano</a>
+      <a href="exercicios.html">Exercícios</a>
+      <a href="referencia-rapida.html">Referência rápida</a>
+      <a href="guia-formador.html">Guia do formador</a>
+      <a href="avaliacao-final.html">Teste final</a>
+      <a href="grelha-avaliacao.html" aria-current="page">Grelha de avaliação</a>
+      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">📊 Uso do formador</p>
+      <h1>Grelha de avaliação</h1>
+      <p class="lead">Rubrica do projecto final com quatro níveis de desempenho, cálculo da classificação final (escala de 0 a 20) e grelha de observação diária. Pesos propostos, a validar com a coordenação pedagógica.</p>
+      <ul class="toc">
+        <li><a href="#rubrica">Rubrica do projecto</a></li>
+        <li><a href="#final">Classificação final</a></li>
+        <li><a href="#observacao">Grelha de observação</a></li>
+      </ul>
+      <div class="actions">
+        <button class="btn" type="button" onclick="window.print()">Imprimir grelha</button>
+        <button class="btn" type="button" id="limpar">Limpar selecção</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="calc" style="grid-template-columns: 2fr 1fr; margin-bottom:1rem">
+      <label>Formando <input type="text" id="formando" autocomplete="off"></label>
+      <label>Link do projecto <input type="url" id="link" placeholder="https://utilizador.github.io/projecto/" autocomplete="off"></label>
+    </div>
+
+    <section id="rubrica">
+      <h2>1. Rubrica do projecto final</h2>
+      <p class="muted">Clique no nível observado em cada critério. A pontuação do projecto é calculada automaticamente.</p>
+      <div class="table-scroll">
+        <table class="rubric" id="rubrica-tabela">
+          <thead>
+            <tr>
+              <th>Critério</th>
+              <th>Insuficiente <span class="lvh">25%</span></th>
+              <th>Suficiente <span class="lvh">50%</span></th>
+              <th>Bom <span class="lvh">75%</span></th>
+              <th>Muito bom <span class="lvh">100%</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-peso="20">
+              <th>HTML semântico e organização de ficheiros <span class="w">peso 20%</span></th>
+              <td class="lv" data-v="0.25">Estrutura com erros graves; sem elementos semânticos; ficheiros desorganizados.</td>
+              <td class="lv" data-v="0.5">Estrutura válida, mas pouco semântica; algumas imagens sem <code>alt</code>.</td>
+              <td class="lv" data-v="0.75">Usa <code>header</code>, <code>nav</code>, <code>main</code>, <code>footer</code>; imagens com <code>alt</code>; pastas organizadas.</td>
+              <td class="lv" data-v="1">Semântica correcta em todas as páginas, hierarquia de títulos sem saltos, nomes de ficheiros consistentes.</td>
+            </tr>
+            <tr data-peso="30">
+              <th>CSS, layout e design responsivo <span class="w">peso 30%</span></th>
+              <td class="lv" data-v="0.25">CSS mínimo ou inline; não se adapta ao telemóvel.</td>
+              <td class="lv" data-v="0.5">CSS externo com cores e fontes; layout simples; adaptação parcial.</td>
+              <td class="lv" data-v="0.75">Flexbox ou Grid bem aplicados; uma media query funcional; boa legibilidade.</td>
+              <td class="lv" data-v="1">Layout coerente em telemóvel, tablet e computador; bom contraste; identidade visual consistente.</td>
+            </tr>
+            <tr data-peso="20">
+              <th>Interactividade com JavaScript <span class="w">peso 20%</span></th>
+              <td class="lv" data-v="0.25">Sem JavaScript ou com erros que impedem o funcionamento.</td>
+              <td class="lv" data-v="0.5">Uma interacção simples que funciona, copiada sem adaptação.</td>
+              <td class="lv" data-v="0.75">Uma interacção adaptada ao site (validação, menu, modo escuro), sem erros na consola.</td>
+              <td class="lv" data-v="1">Interacções úteis e bem integradas; mensagens claras; código organizado e comentado.</td>
+            </tr>
+            <tr data-peso="15">
+              <th>Publicação online funcional <span class="w">peso 15%</span></th>
+              <td class="lv" data-v="0.25">Não publicado.</td>
+              <td class="lv" data-v="0.5">Publicado, mas com páginas, estilos ou imagens em falta.</td>
+              <td class="lv" data-v="0.75">Publicado e funcional, com pequenas falhas (um link ou imagem).</td>
+              <td class="lv" data-v="1">Publicado no GitHub Pages, todos os links e recursos funcionam.</td>
+            </tr>
+            <tr data-peso="15">
+              <th>Apresentação oral <span class="w">peso 15%</span></th>
+              <td class="lv" data-v="0.25">Não apresentou ou não demonstrou o site.</td>
+              <td class="lv" data-v="0.5">Mostrou o site sem explicar as escolhas.</td>
+              <td class="lv" data-v="0.75">Explicou tema, estrutura e a parte em JavaScript dentro do tempo.</td>
+              <td class="lv" data-v="1">Apresentação clara e no tempo; justificou decisões e falou de uma dificuldade resolvida.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Pontuação do projecto:</strong> <span id="proj-out">—</span></p>
+    </section>
+
+    <section id="final">
+      <h2>2. Classificação final</h2>
+      <div class="calc">
+        <label>Participação e assiduidade (0–20) <span class="small">peso 20%</span><input type="number" id="part" min="0" max="20" step="0.5"></label>
+        <label>Exercícios diários (0–20) <span class="small">peso 30%</span><input type="number" id="exer" min="0" max="20" step="0.5"></label>
+        <label>Projecto final (0–20) <span class="small">peso 50%</span><input type="number" id="proj" min="0" max="20" step="0.5"></label>
+        <div class="final" role="status" aria-live="polite">
+          <span class="small">Classificação final</span>
+          <div class="big" id="nota">—</div>
+          <span class="small" id="nota-txt">Preencha as três componentes.</span>
+        </div>
+      </div>
+      <p class="small" style="margin-top:.8rem">O valor do projecto é preenchido automaticamente pela rubrica, mas pode ser ajustado. Aprovação sugerida: 10 valores ou mais. Sugestão para os exercícios: 5 valores por exercício entregue e correcto (4 exercícios = 20).</p>
+    </section>
+
+    <section id="observacao">
+      <h2>3. Grelha de observação diária</h2>
+      <p class="muted">Para imprimir e preencher na sala. Escala: 1 (fraco) a 4 (muito bom). P = presente, F = falta.</p>
+      <div class="table-scroll">
+        <table class="obs">
+          <thead>
+            <tr><th rowspan="2">Formando</th><th colspan="2">Dia 1</th><th colspan="2">Dia 2</th><th colspan="2">Dia 3</th><th colspan="2">Dia 4</th><th colspan="2">Dia 5</th><th rowspan="2">Nota (0–20)</th></tr>
+            <tr><th>P/F</th><th>Part.</th><th>P/F</th><th>Part.</th><th>P/F</th><th>Part.</th><th>P/F</th><th>Part.</th><th>P/F</th><th>Part.</th></tr>
+          </thead>
+          <tbody id="obs-body"></tbody>
+        </table>
+      </div>
+      <p class="small">Sugestão de conversão: média da participação (1–4) × 5 = nota de 0 a 20, ajustada pela assiduidade.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Programação Web – Nível Básico · Grelha de avaliação</div></footer>
+
+<script>
+/* Linhas em branco da grelha de observação */
+const obs = document.getElementById("obs-body");
+for (let i = 0; i < 15; i++) {
+  const tr = document.createElement("tr");
+  for (let j = 0; j < 12; j++) tr.append(document.createElement("td"));
+  obs.append(tr);
+}
+
+/* Rubrica: um nível seleccionado por critério */
+const linhas = document.querySelectorAll("#rubrica-tabela tbody tr");
+const projOut = document.getElementById("proj-out");
+const proj = document.getElementById("proj");
+
+linhas.forEach(tr => {
+  tr.querySelectorAll("td.lv").forEach(td => {
+    td.tabIndex = 0;
+    td.setAttribute("role", "button");
+    td.setAttribute("aria-pressed", "false");
+    const escolher = () => {
+      tr.querySelectorAll("td.lv").forEach(o => { o.classList.remove("sel"); o.setAttribute("aria-pressed", "false"); });
+      td.classList.add("sel");
+      td.setAttribute("aria-pressed", "true");
+      calcularProjecto();
+    };
+    td.addEventListener("click", escolher);
+    td.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); escolher(); } });
+  });
+});
+
+function calcularProjecto() {
+  let total = 0, avaliados = 0;
+  linhas.forEach(tr => {
+    const sel = tr.querySelector("td.lv.sel");
+    if (sel) { total += Number(tr.dataset.peso) * Number(sel.dataset.v); avaliados++; }
+  });
+  if (avaliados === 0) { projOut.textContent = "—"; return; }
+  const nota = Math.round(total / 100 * 20 * 10) / 10;   // 0 a 20, uma casa decimal
+  projOut.textContent = total + "% → " + nota + " valores" + (avaliados < linhas.length ? " (faltam " + (linhas.length - avaliados) + " critérios)" : "");
+  if (avaliados === linhas.length) { proj.value = nota; calcularFinal(); }
+}
+
+/* Classificação final ponderada */
+const campos = ["part", "exer", "proj"].map(id => document.getElementById(id));
+const pesos = [0.2, 0.3, 0.5];
+function calcularFinal() {
+  const valores = campos.map(c => c.value === "" ? null : Math.min(20, Math.max(0, Number(c.value))));
+  const notaEl = document.getElementById("nota");
+  const txt = document.getElementById("nota-txt");
+  if (valores.includes(null)) { notaEl.textContent = "—"; txt.textContent = "Preencha as três componentes."; return; }
+  const nota = Math.round(valores.reduce((s, v, i) => s + v * pesos[i], 0) * 10) / 10;
+  notaEl.textContent = nota.toFixed(1).replace(".", ",") + " val.";
+  txt.textContent = nota >= 10 ? "Aprovado (proposta)" : "Não aprovado (proposta)";
+}
+campos.forEach(c => c.addEventListener("input", calcularFinal));
+
+document.getElementById("limpar").addEventListener("click", () => {
+  document.querySelectorAll("td.lv").forEach(o => { o.classList.remove("sel"); o.setAttribute("aria-pressed", "false"); });
+  campos.forEach(c => c.value = "");
+  document.getElementById("formando").value = "";
+  document.getElementById("link").value = "";
+  projOut.textContent = "—";
+  calcularFinal();
+});
+</script>
+</body>
+</html>

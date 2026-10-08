@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referência rápida HTML, CSS e JavaScript | Programação Web – Nível Básico</title>
+<link rel="stylesheet" href="../css/materiais.css">
+<script src="../js/tema.js"></script>
+<style>
+  .ref { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+  .ref .card h3 { margin-top: 0; }
+  .ref table { font-size: .88rem; }
+  .ref td:first-child { width: 42%; }
+  .sec-html { --c: var(--d2); }
+  .sec-css { --c: var(--d3); }
+  .sec-js { --c: var(--d4); }
+  .sec-pub { --c: var(--d5); }
+  @media (max-width: 760px) { .ref { grid-template-columns: 1fr; } }
+  @media print { .ref { grid-template-columns: 1fr 1fr; gap: .5rem; } .ref .card { break-inside: auto; padding: .7rem .8rem; } .ref table { font-size: 8pt; } .ref td:first-child { width: auto; } .ref pre.code { font-size: 7.5pt; padding: .5rem .6rem; } }
+</style>
+</head>
+<body style="--c: var(--d3)">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
+    <nav aria-label="Materiais">
+      <a href="../index.html">Plano</a>
+      <a href="exercicios.html">Exercícios</a>
+      <a href="referencia-rapida.html" aria-current="page">Referência rápida</a>
+      <a href="guia-formador.html">Guia do formador</a>
+      <a href="avaliacao-final.html">Teste final</a>
+      <a href="grelha-avaliacao.html">Grelha de avaliação</a>
+      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">📌 Material do formando</p>
+      <h1>Referência rápida</h1>
+      <p class="lead">O essencial de HTML, CSS, JavaScript e publicação numa só página, para consultar durante os exercícios e o projecto final.</p>
+      <ul class="toc">
+        <li><a href="#html">HTML</a></li>
+        <li><a href="#css">CSS</a></li>
+        <li><a href="#js">JavaScript</a></li>
+        <li><a href="#pub">Publicação</a></li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" onclick="window.print()">Imprimir (A4)</button></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- HTML -->
+    <section id="html" class="sec-html">
+      <h2>HTML: estrutura e conteúdo</h2>
+      <pre class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Título do separador&lt;/title&gt;
+  &lt;link rel="stylesheet" href="css/estilo.css"&gt;
+  &lt;script src="js/script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;...&lt;/header&gt;  &lt;nav&gt;...&lt;/nav&gt;  &lt;main&gt;...&lt;/main&gt;  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      <div class="ref">
+        <div class="card accent">
+          <h3>Texto e ligações</h3>
+          <table>
+            <tbody>
+              <tr><td><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></td><td>Títulos (um só <code>h1</code> por página)</td></tr>
+              <tr><td><code>&lt;p&gt;</code></td><td>Parágrafo</td></tr>
+              <tr><td><code>&lt;strong&gt;</code> / <code>&lt;em&gt;</code></td><td>Importância / ênfase</td></tr>
+              <tr><td><code>&lt;br&gt;</code></td><td>Quebra de linha</td></tr>
+              <tr><td><code>&lt;a href="pagina.html"&gt;</code></td><td>Link interno (caminho relativo)</td></tr>
+              <tr><td><code>&lt;a href="https://…" target="_blank"&gt;</code></td><td>Link externo, novo separador</td></tr>
+              <tr><td><code>&lt;a href="mailto:…"&gt;</code></td><td>Link de e-mail</td></tr>
+              <tr><td><code>&lt;a href="#id"&gt;</code></td><td>Salto para uma secção</td></tr>
+              <tr><td><code>&lt;img src="…" alt="…"&gt;</code></td><td>Imagem (o <code>alt</code> é obrigatório)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent">
+          <h3>Listas e tabelas</h3>
+          <table>
+            <tbody>
+              <tr><td><code>&lt;ul&gt;</code> + <code>&lt;li&gt;</code></td><td>Lista com marcadores</td></tr>
+              <tr><td><code>&lt;ol&gt;</code> + <code>&lt;li&gt;</code></td><td>Lista numerada</td></tr>
+              <tr><td><code>&lt;table&gt;</code></td><td>Tabela (só para dados)</td></tr>
+              <tr><td><code>&lt;caption&gt;</code></td><td>Título da tabela</td></tr>
+              <tr><td><code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code></td><td>Cabeçalho / corpo</td></tr>
+              <tr><td><code>&lt;tr&gt;</code></td><td>Linha</td></tr>
+              <tr><td><code>&lt;th&gt;</code> / <code>&lt;td&gt;</code></td><td>Célula de cabeçalho / de dados</td></tr>
+              <tr><td><code>colspan="2"</code></td><td>Célula ocupa 2 colunas</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent">
+          <h3>Formulários</h3>
+          <table>
+            <tbody>
+              <tr><td><code>&lt;form&gt;</code></td><td>Agrupa os campos</td></tr>
+              <tr><td><code>&lt;label for="x"&gt;</code></td><td>Nome do campo com <code>id="x"</code></td></tr>
+              <tr><td><code>&lt;input type="…"&gt;</code></td><td><code>text</code>, <code>email</code>, <code>tel</code>, <code>number</code>, <code>date</code>, <code>password</code>, <code>checkbox</code>, <code>radio</code></td></tr>
+              <tr><td><code>&lt;select&gt;</code> + <code>&lt;option&gt;</code></td><td>Lista de escolha</td></tr>
+              <tr><td><code>&lt;textarea&gt;</code></td><td>Texto longo</td></tr>
+              <tr><td><code>&lt;button type="submit"&gt;</code></td><td>Botão de envio</td></tr>
+              <tr><td><code>required</code></td><td>Obrigatório</td></tr>
+              <tr><td><code>minlength</code> / <code>maxlength</code></td><td>Nº de caracteres</td></tr>
+              <tr><td><code>min</code> / <code>max</code></td><td>Limites de número ou data</td></tr>
+              <tr><td><code>pattern="[0-9]{9}"</code></td><td>Formato exigido</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent">
+          <h3>Semântica e boas práticas</h3>
+          <table>
+            <tbody>
+              <tr><td><code>&lt;header&gt;</code></td><td>Cabeçalho</td></tr>
+              <tr><td><code>&lt;nav&gt;</code></td><td>Menu de navegação</td></tr>
+              <tr><td><code>&lt;main&gt;</code></td><td>Conteúdo principal (um por página)</td></tr>
+              <tr><td><code>&lt;section&gt;</code></td><td>Secção temática</td></tr>
+              <tr><td><code>&lt;article&gt;</code></td><td>Conteúdo independente</td></tr>
+              <tr><td><code>&lt;aside&gt;</code></td><td>Conteúdo lateral</td></tr>
+              <tr><td><code>&lt;footer&gt;</code></td><td>Rodapé</td></tr>
+            </tbody>
+          </table>
+          <ul class="small" style="margin-top:.8rem">
+            <li>Hierarquia de títulos sem saltos.</li>
+            <li>Ficheiros em minúsculas, sem espaços nem acentos.</li>
+            <li>Comentário: <code>&lt;!-- texto --&gt;</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSS -->
+    <section id="css" class="sec-css">
+      <h2>CSS: aparência e layout</h2>
+      <pre class="code"><code>seletor { propriedade: valor; }      /* comentário */
+* { box-sizing: border-box; }          /* no início de todos os projectos */
+img { max-width: 100%; height: auto; } /* imagens flexíveis */</code></pre>
+      <div class="ref">
+        <div class="card accent">
+          <h3>Seletores e prioridade</h3>
+          <table>
+            <tbody>
+              <tr><td><code>p</code></td><td>Todos os parágrafos</td></tr>
+              <tr><td><code>.classe</code></td><td>Elementos com <code>class="classe"</code></td></tr>
+              <tr><td><code>#id</code></td><td>O elemento com <code>id="id"</code></td></tr>
+              <tr><td><code>nav a</code></td><td>Links dentro de <code>nav</code></td></tr>
+              <tr><td><code>h1, h2</code></td><td>Vários seletores</td></tr>
+              <tr><td><code>a:hover</code></td><td>Rato por cima</td></tr>
+            </tbody>
+          </table>
+          <p class="small" style="margin-top:.8rem">Prioridade: inline &gt; <code>#id</code> &gt; <code>.classe</code> &gt; elemento. Com a mesma força, ganha a última regra.</p>
+        </div>
+        <div class="card accent">
+          <h3>Cores, texto e caixa</h3>
+          <table>
+            <tbody>
+              <tr><td><code>color</code> / <code>background</code></td><td>Cor do texto / do fundo</td></tr>
+              <tr><td><code>#2965F1</code>, <code>rgb()</code>, <code>rgba()</code></td><td>Formas de escrever cores</td></tr>
+              <tr><td><code>font-family</code></td><td><code>Arial, sans-serif</code></td></tr>
+              <tr><td><code>font-size</code> / <code>font-weight</code></td><td><code>1rem</code>, <code>18px</code> / <code>400</code>, <code>700</code></td></tr>
+              <tr><td><code>line-height</code> / <code>text-align</code></td><td><code>1.6</code> / <code>center</code></td></tr>
+              <tr><td><code>padding</code></td><td>Espaço interno</td></tr>
+              <tr><td><code>border</code></td><td><code>2px solid #333</code></td></tr>
+              <tr><td><code>margin</code></td><td>Espaço externo; <code>0 auto</code> centra</td></tr>
+              <tr><td><code>border-radius</code></td><td>Cantos arredondados</td></tr>
+              <tr><td><code>display</code></td><td><code>block</code>, <code>inline</code>, <code>inline-block</code>, <code>none</code>, <code>flex</code>, <code>grid</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent">
+          <h3>Flexbox (uma dimensão)</h3>
+          <pre class="code"><code>.contentor {
+  display: flex;
+  flex-direction: row;        /* ou column */
+  justify-content: space-between; /* eixo principal */
+  align-items: center;        /* eixo transversal */
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.item { flex: 1 1 200px; }    /* cresce, encolhe, base */</code></pre>
+          <p class="small"><code>justify-content</code>: <code>flex-start</code> · <code>center</code> · <code>space-between</code> · <code>space-around</code></p>
+        </div>
+        <div class="card accent">
+          <h3>Grid (duas dimensões) e responsivo</h3>
+          <pre class="code"><code>.grelha {
+  display: grid;
+  grid-template-columns: 1fr;   /* telemóvel */
+  gap: 20px;
+}
+.destaque { grid-column: span 2; }
+
+@media (min-width: 600px) {     /* tablet e acima */
+  .grelha { grid-template-columns: repeat(3, 1fr); }
+}</code></pre>
+          <p class="small">Mobile-first: CSS do telemóvel primeiro, depois <code>min-width</code>. Teste com <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> nas DevTools.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JavaScript -->
+    <section id="js" class="sec-js">
+      <h2>JavaScript: comportamento</h2>
+      <div class="ref">
+        <div class="card accent">
+          <h3>Variáveis, tipos e operadores</h3>
+          <pre class="code"><code>const nome = "Ana";       // não muda
+let total = 0;            // pode mudar
+total = total + 1500;     // ou: total += 1500
+
+// String, Number, Boolean, undefined, null, Array, Object
+const cursos = ["HTML", "CSS", "JS"];
+const aluno = { nome: "Ana", idade: 25 };
+typeof nome               // "string"
+Number("2") + 2           // 4</code></pre>
+          <table>
+            <tbody>
+              <tr><td>Aritméticos</td><td><code>+ - * / %</code></td></tr>
+              <tr><td>Comparação</td><td><code>=== !== &gt; &lt; &gt;= &lt;=</code></td></tr>
+              <tr><td>Lógicos</td><td><code>&amp;&amp;</code> (e) · <code>||</code> (ou) · <code>!</code> (não)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card accent">
+          <h3>Condições e funções</h3>
+          <pre class="code"><code>if (nota &gt;= 16) {
+  mensagem = "Muito bom!";
+} else if (nota &gt;= 10) {
+  mensagem = "Aprovado.";
+} else {
+  mensagem = "Precisa de melhorar.";
+}
+
+function calcularTotal(preco, quantidade) {
+  return preco * quantidade;
+}
+const conta = calcularTotal(2500, 4); // 10000</code></pre>
+        </div>
+        <div class="card accent">
+          <h3>DOM: seleccionar e alterar</h3>
+          <pre class="code"><code>const titulo = document.querySelector("#titulo");
+const itens = document.querySelectorAll(".item");
+
+titulo.textContent = "Novo texto";
+titulo.classList.add("destaque");
+titulo.classList.remove("destaque");
+titulo.classList.toggle("escuro");
+titulo.classList.contains("escuro"); // true/false
+campo.value                          // texto do campo</code></pre>
+        </div>
+        <div class="card accent">
+          <h3>Eventos</h3>
+          <pre class="code"><code>botao.addEventListener("click", function () {
+  document.body.classList.toggle("escuro");
+});
+
+form.addEventListener("submit", function (evento) {
+  evento.preventDefault();          // não recarrega
+  const nome = campoNome.value.trim();
+  if (nome.length &lt; 3) {
+    aviso.textContent = "Nome demasiado curto.";
+  }
+});</code></pre>
+          <p class="small">Outros eventos: <code>input</code>, <code>change</code>, <code>keydown</code>, <code>mouseover</code>. Erros? Abra a consola: <kbd>F12</kbd> &gt; Console.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publicação -->
+    <section id="pub" class="sec-pub">
+      <h2>Publicação no GitHub Pages</h2>
+      <div class="ref">
+        <div class="card accent">
+          <h3>Passos</h3>
+          <ol class="steps">
+            <li><strong>New repository</strong>, nome (ex.: <code>meu-site</code>), <strong>Public</strong>.</li>
+            <li><strong>Add file &gt; Upload files</strong>: arraste o conteúdo da pasta (não a pasta).</li>
+            <li>Mensagem e <strong>Commit changes</strong>.</li>
+            <li><strong>Settings &gt; Pages</strong>: <em>Deploy from a branch</em>, <code>main</code>, <code>/ (root)</code>, <strong>Save</strong>.</li>
+            <li>Abrir <code>https://utilizador.github.io/meu-site/</code> após alguns minutos.</li>
+          </ol>
+          <p class="small">A interface do GitHub pode mudar ligeiramente.</p>
+        </div>
+        <div class="card accent">
+          <h3>Antes de publicar</h3>
+          <ul class="checklist">
+            <li><code>index.html</code> na raiz, em minúsculas.</li>
+            <li>Caminhos relativos (<code>css/estilo.css</code>, <code>../img/x.jpg</code>), nunca <code>C:\…</code></li>
+            <li>Nomes de ficheiros iguais no HTML e na pasta (maiúsculas contam).</li>
+            <li>Imagens com <code>alt</code> e abaixo de ~300 KB.</li>
+            <li>Funciona no modo telemóvel e a consola não tem erros.</li>
+            <li>Cada página tem um <code>&lt;title&gt;</code> próprio.</li>
+            <li>Sem dados pessoais de terceiros nem conteúdo sem autorização.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="callout">Documentação de referência: <a href="https://developer.mozilla.org/pt-BR/" target="_blank">MDN Web Docs</a> · <a href="https://docs.github.com/pt/pages" target="_blank">GitHub Pages</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Programação Web – Nível Básico · Referência rápida</div></footer>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caderno de exercícios | Programação Web – Nível Básico</title>
+<link rel="stylesheet" href="../css/materiais.css">
+<script src="../js/tema.js"></script>
+</head>
+<body style="--c: var(--d2)">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
+    <nav aria-label="Materiais">
+      <a href="../index.html">Plano</a>
+      <a href="exercicios.html" aria-current="page">Exercícios</a>
+      <a href="referencia-rapida.html">Referência rápida</a>
+      <a href="guia-formador.html">Guia do formador</a>
+      <a href="avaliacao-final.html">Teste final</a>
+      <a href="grelha-avaliacao.html">Grelha de avaliação</a>
+      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">✍️ Material do formando</p>
+      <h1>Caderno de exercícios</h1>
+      <p class="lead">Os quatro exercícios práticos da formação. Cada um tem uma pasta de <strong>início</strong>, com instruções nos comentários (<code>TODO</code>), e uma pasta de <strong>solução</strong>, para correcção.</p>
+      <ul class="toc">
+        <li><a href="#como">Como usar</a></li>
+        <li><a href="#ex1">Exercício 1</a></li>
+        <li><a href="#ex2">Exercício 2</a></li>
+        <li><a href="#ex3">Exercício 3</a></li>
+        <li><a href="#ex4">Exercício 4</a></li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" onclick="window.print()">Imprimir caderno</button></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="como">
+      <h2>Como usar estes ficheiros</h2>
+      <ol class="steps">
+        <li>Copie a pasta <code>inicio</code> do exercício para o seu computador e abra-a no VS Code (<em>File &gt; Open Folder</em>).</li>
+        <li>Abra o ficheiro HTML com o <strong>Live Server</strong> (botão direito &gt; <em>Open with Live Server</em>).</li>
+        <li>Siga os comentários <code>TODO</code> por ordem. Guarde (<kbd>Ctrl</kbd> + <kbd>S</kbd>) e veja o resultado no navegador.</li>
+        <li>Só no fim compare o seu trabalho com a pasta <code>solucao</code>. Há várias soluções correctas.</li>
+      </ol>
+      <p class="callout">Nota para o formador: distribua apenas as pastas <code>inicio</code> durante a aula. Partilhe as soluções depois da correcção.</p>
+    </section>
+
+    <!-- Exercício 1 -->
+    <section id="ex1" class="card accent" style="--c: var(--d1)">
+      <p class="chip">Dia 1 · cerca de 30 minutos</p>
+      <h2 style="margin-top:.2rem">Exercício 1: Cartão de apresentação pessoal</h2>
+      <p><strong>Objectivo:</strong> criar uma página HTML completa com a estrutura básica e as tags essenciais.</p>
+      <div class="grid2">
+        <div>
+          <h3>Tarefas</h3>
+          <ol>
+            <li>Estrutura básica de HTML5, com título no separador.</li>
+            <li>Um <code>&lt;h1&gt;</code> com o seu nome.</li>
+            <li>Uma fotografia ou avatar, com texto alternativo.</li>
+            <li>Dois parágrafos sobre si, com uma palavra em <code>&lt;strong&gt;</code>.</li>
+            <li>Três links: e-mail, uma rede social e o seu site favorito.</li>
+          </ol>
+          <p class="small">Desafio extra: um link que leve ao topo da página.</p>
+        </div>
+        <div>
+          <h3>Critérios de correcção</h3>
+          <ul class="checklist">
+            <li><code>lang="pt"</code>, <code>charset</code> e <code>title</code> presentes.</li>
+            <li>Um único <code>h1</code>.</li>
+            <li>A imagem aparece e tem <code>alt</code> descritivo.</li>
+            <li>Os três links funcionam; o externo abre noutro separador.</li>
+            <li>Todas as tags estão fechadas.</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Ficheiros:</strong> <a href="../exercicios/dia-1.html">início</a> · <a href="../exercicios/dia-1.html#solucao">solução</a></p>
+    </section>
+
+    <!-- Exercício 2 -->
+    <section id="ex2" class="card accent" style="--c: var(--d2)">
+      <p class="chip">Dia 2 · cerca de 45 minutos</p>
+      <h2 style="margin-top:.2rem">Exercício 2: Página de inscrição na formação</h2>
+      <p><strong>Objectivo:</strong> combinar estrutura semântica, listas, tabelas, formulários e uma folha de estilos externa.</p>
+      <div class="grid2">
+        <div>
+          <h3>Tarefas</h3>
+          <ol>
+            <li>Página <code>inscricao.html</code> com <code>header</code>, <code>nav</code>, <code>main</code> e <code>footer</code>.</li>
+            <li>Lista com os 6 módulos e tabela com o horário dos 5 dias.</li>
+            <li>Formulário com nome, e-mail, telefone, área de interesse e turno, com campos obrigatórios.</li>
+            <li>Ficheiro <code>css/estilo.css</code> ligado à página, com fontes, cores e espaçamentos.</li>
+            <li>Pelo menos uma classe e o efeito <code>:hover</code> nos links.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Critérios de correcção</h3>
+          <ul class="checklist">
+            <li>Os quatro elementos semânticos estão presentes.</li>
+            <li>A tabela tem <code>thead</code>, <code>tbody</code> e <code>th</code>.</li>
+            <li>Cada campo tem <code>label</code> ligado por <code>for</code>/<code>id</code>.</li>
+            <li>O formulário vazio não é enviado (<code>required</code>); o telefone exige 9 dígitos.</li>
+            <li>O CSS é externo e não há estilos inline.</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Ficheiros:</strong> <a href="../exercicios/dia-2.html">início</a> · <a href="../exercicios/dia-2.html#solucao">solução</a></p>
+      <p class="small">Guarde este trabalho: é o ponto de partida do Exercício 4.</p>
+    </section>
+
+    <!-- Exercício 3 -->
+    <section id="ex3" class="card accent" style="--c: var(--d3)">
+      <p class="chip">Dia 3 · cerca de 45 minutos</p>
+      <h2 style="margin-top:.2rem">Exercício 3: Landing page responsiva</h2>
+      <p><strong>Objectivo:</strong> aplicar o box model, Flexbox, Grid e media queries numa página real, com abordagem mobile-first.</p>
+      <div class="grid2">
+        <div>
+          <h3>Tarefas</h3>
+          <ol>
+            <li>Página <code>index.html</code> para um negócio, com estrutura semântica (já fornecida no início).</li>
+            <li>Cabeçalho com logótipo e menu alinhados com Flexbox.</li>
+            <li>Secção de destaque com título, texto e botão.</li>
+            <li>Grelha de três serviços com Grid.</li>
+            <li>Em ecrãs com menos de 600px, os serviços ficam numa só coluna.</li>
+            <li>Rodapé com contactos.</li>
+          </ol>
+        </div>
+        <div>
+          <h3>Critérios de correcção</h3>
+          <ul class="checklist">
+            <li><code>box-sizing: border-box</code> aplicado.</li>
+            <li>Menu em linha com <code>display: flex</code> e sem marcadores.</li>
+            <li>Serviços com <code>display: grid</code>.</li>
+            <li>Media query com <code>min-width: 600px</code> (ou equivalente).</li>
+            <li>Sem barra de deslocamento horizontal no modo telemóvel das DevTools.</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Ficheiros:</strong> <a href="../exercicios/dia-3.html">início</a> · <a href="../exercicios/dia-3.html#solucao">solução</a></p>
+    </section>
+
+    <!-- Exercício 4 -->
+    <section id="ex4" class="card accent" style="--c: var(--d4)">
+      <p class="chip">Dia 4 · cerca de 40 minutos</p>
+      <h2 style="margin-top:.2rem">Exercício 4: Página interactiva</h2>
+      <p><strong>Objectivo:</strong> usar o DOM e os eventos <code>submit</code> e <code>click</code> para dar comportamento à página de inscrição.</p>
+      <div class="grid2">
+        <div>
+          <h3>Tarefas</h3>
+          <ol>
+            <li>Criar <code>js/script.js</code> e ligá-lo com <code>defer</code>.</li>
+            <li>No envio do formulário, mostrar um aviso se o nome tiver menos de 3 letras.</li>
+            <li>Se estiver tudo correcto, mostrar uma mensagem de agradecimento com o nome.</li>
+            <li>Um botão que alterna entre modo claro e modo escuro.</li>
+          </ol>
+          <p class="small">Desafio extra: um botão que mostra e esconde o menu em ecrãs pequenos.</p>
+        </div>
+        <div>
+          <h3>Critérios de correcção</h3>
+          <ul class="checklist">
+            <li>A consola não mostra erros.</li>
+            <li><code>preventDefault()</code> usado no <code>submit</code>.</li>
+            <li>A mensagem aparece na página (não em <code>alert</code>) e diz o que corrigir.</li>
+            <li>O modo escuro usa <code>classList.toggle</code> e regras CSS, não estilos inline.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="callout">No ficheiro de início, o campo nome já não tem <code>minlength</code>: assim é o JavaScript, e não o navegador, que mostra o aviso. Para testar, preencha primeiro os restantes campos obrigatórios: enquanto houver campos inválidos, o navegador bloqueia o envio antes de o JavaScript correr.</p>
+      <p><strong>Ficheiros:</strong> <a href="../exercicios/dia-4.html">início</a> · <a href="../exercicios/dia-4.html#solucao">solução</a></p>
+    </section>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Programação Web – Nível Básico · Caderno de exercícios</div></footer>
+</body>
+</html>

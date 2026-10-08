@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programação Web – Nível Básico | Plano de Formação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="js/tema.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F7FB;
+    --white: #FFFFFF;
+    --ink: #1D2340;
+    --muted: #636A85;
+    --line: #E6E8F0;
+    --code-bg: #1F2433;
+    --code-soft: #EEEDFC;
+    --d1: #6C5CE7;
+    --d2: #FF6B4A;
+    --d3: #2D9CDB;
+    --d4: #F2B705;
+    --d4-fill: #F2B705;
+    --d5: #20B486;
+    --accent: var(--d1);
+    --sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+    --radius: 20px;
+    --shadow: 0 1px 2px rgba(29,35,64,.04), 0 8px 24px rgba(29,35,64,.07);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6;
+    color: var(--ink); background: var(--paper);
+  }
+  a { color: var(--d1); font-weight: 600; }
+  :focus-visible { outline: 3px solid var(--d1); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 1.25rem; }
+  code { font-family: var(--mono); font-size: .88em; background: var(--code-soft); padding: .05em .35em; border-radius: 6px; }
+
+  /* Cabeçalho flutuante */
+  .topbar { position: sticky; top: 0; z-index: 30; padding: .75rem 0; background: rgba(247,247,251,.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .brand { font-weight: 800; text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; gap: .55rem; letter-spacing: -.01em; }
+  .brand code { font-family: var(--mono); background: var(--ink); color: #fff; padding: .25rem .5rem; border-radius: 10px; font-size: .85rem; }
+  .topnav { display: flex; gap: .25rem; flex-wrap: wrap; background: var(--white); padding: .3rem; border-radius: 999px; box-shadow: var(--shadow); }
+  .topnav a { color: var(--muted); text-decoration: none; font-size: .86rem; font-weight: 600; padding: .4rem .7rem; border-radius: 999px; white-space: nowrap; }
+  @media (min-width: 900px) { .brand { white-space: nowrap; } }
+  @media (max-width: 560px) { .brand { font-size: .92rem; } }
+  @media (max-width: 1180px) { .topnav a[href="#riscos"] { display: none; } }
+  .topnav a:hover { color: var(--ink); background: var(--paper); }
+
+  /* Hero */
+  .hero {
+    padding: 3.5rem 0 4rem; position: relative; overflow: hidden;
+    background:
+      radial-gradient(520px 520px at 88% 0%, rgba(108,92,231,.16), transparent 70%),
+      radial-gradient(420px 420px at 0% 100%, rgba(255,107,74,.12), transparent 70%);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 3rem; align-items: center; }
+  .hero h1 { font-size: clamp(2.4rem, 5.4vw, 4rem); line-height: 1.04; letter-spacing: -0.035em; margin: 0 0 1.1rem; font-weight: 800; }
+  .hero h1 .tag { font-family: var(--mono); font-weight: 600; color: var(--d1); font-size: .38em; display: block; letter-spacing: 0; }
+  .hero h1 .tag.close { margin-top: .35em; color: #A9A3F0; }
+  .hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 36ch; margin: 0 0 1.75rem; }
+  .facts { display: flex; gap: .6rem; flex-wrap: wrap; margin: 0; }
+  .facts dt { display: none; }
+  .facts dd { margin: 0; font-size: .95rem; font-weight: 700; background: var(--white); border-radius: 999px; padding: .45rem 1rem; box-shadow: var(--shadow); }
+  .facts dd:nth-of-type(1)::before { content: "⏱️ "; }
+  .facts dd:nth-of-type(1)::after { content: " de formação"; font-weight: 500; color: var(--muted); }
+  .facts dd:nth-of-type(2)::before { content: "📅 "; }
+  .facts dd:nth-of-type(3)::before { content: "☕ "; }
+  .facts dd:nth-of-type(3)::after { content: " por dia"; font-weight: 500; color: var(--muted); }
+
+  /* Editor ao vivo, com aspecto de janela */
+  .playground { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 50px rgba(29,35,64,.14); }
+  .pg-head {
+    display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+    padding: .7rem 1rem .7rem 4.2rem; font-size: .88rem; color: var(--muted); font-weight: 600; position: relative;
+    background: var(--code-bg); color: #C9CDE0;
+  }
+  .pg-head::before {
+    content: ""; position: absolute; left: 1.1rem; top: 50%; width: .7rem; height: .7rem; border-radius: 50%;
+    background: #FF5F57; box-shadow: 1.05rem 0 0 #FEBC2E, 2.1rem 0 0 #28C840; transform: translateY(-50%);
+  }
+  .pg-body { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
+  .pg-body textarea {
+    width: 100%; height: 100%; min-height: 320px; border: 0; resize: none;
+    padding: 1rem; font-family: var(--mono); font-size: .8rem; line-height: 1.6;
+    background: var(--code-bg); color: #E8EAF2; tab-size: 2;
+  }
+  .pg-body iframe { width: 100%; height: 100%; min-height: 320px; border: 0; background: #fff; }
+
+  .btn {
+    font: inherit; font-size: .92rem; font-weight: 700; cursor: pointer;
+    border: 0; background: var(--white); color: var(--ink);
+    border-radius: 999px; padding: .65rem 1.2rem; box-shadow: var(--shadow);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(29,35,64,.12); }
+  .btn.solid { background: var(--d1); color: #fff; }
+  .pg-head .btn { white-space: nowrap; padding: .35rem .9rem; font-size: .82rem; background: rgba(255,255,255,.12); color: #fff; box-shadow: none; }
+  .hero-actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 2rem; }
+  a.btn { text-decoration: none; display: inline-block; }
+
+  /* Secções */
+  section.block { padding: 4rem 0; }
+  h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); letter-spacing: -0.025em; margin: 0 0 .5rem; line-height: 1.15; font-weight: 800; }
+  h3 { font-size: 1.15rem; margin: 1.75rem 0 .6rem; font-weight: 700; }
+  .section-intro { color: var(--muted); max-width: 65ch; margin: 0 0 2rem; font-size: 1.08rem; }
+
+  /* Linha do tempo dos dias */
+  .timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: .8rem; list-style: none; padding: 0; margin: 0 0 1.25rem; }
+  .timeline button {
+    width: 100%; height: 100%; text-align: left; font: inherit; cursor: pointer;
+    background: var(--white); border: 2px solid transparent; border-radius: var(--radius);
+    padding: 1rem; color: var(--ink); box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .timeline button:hover { transform: translateY(-3px); }
+  .timeline button[aria-selected="true"] { border-color: var(--c); background: color-mix(in srgb, var(--c) 10%, var(--white)); }
+  .timeline .ico { font-size: 1.5rem; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 14px; background: color-mix(in srgb, var(--c) 16%, var(--white)); margin-bottom: .7rem; }
+  .timeline .n { display: none; }
+  .timeline .t { font-size: .92rem; font-weight: 700; display: block; line-height: 1.3; }
+  .timeline .done-mark { font-size: .8rem; display: inline-block; margin-top: .5rem; color: #13805F; font-weight: 700; }
+  .timeline .done-mark:not(:empty)::before { content: "✓ "; }
+
+  .progress { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; font-size: .92rem; color: var(--muted); font-weight: 600; flex-wrap: wrap; }
+  .progress .bar { flex: 1; min-width: 140px; height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .progress .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--d1), var(--d5)); border-radius: 999px; transition: width .3s ease; }
+
+  /* Painel do dia */
+  .day-panel { background: var(--white); border-radius: 28px; padding: 2.2rem; box-shadow: var(--shadow); position: relative; overflow: hidden; }
+  .day-panel::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 8px; background: var(--c); }
+  .day-panel header { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: flex-start; }
+  .day-panel h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+  .day-sub { color: var(--muted); margin: 0; }
+  .modules { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .9rem; }
+  .chip { font-size: .84rem; font-weight: 600; padding: .3rem .8rem; border-radius: 999px; color: var(--ink); background: color-mix(in srgb, var(--c) 14%, var(--white)); }
+  .day-panel .btn.solid { background: var(--c); color: #fff; }
+  .day-panel[style*="--d4"] .btn.solid { color: var(--ink); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  ul.clean { padding-left: 1.2rem; margin: 0; }
+  ul.clean li { margin-bottom: .4rem; }
+  ul.clean li::marker { color: var(--d1); }
+
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: .95rem; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+  caption { text-align: left; color: var(--muted); font-size: .9rem; font-weight: 600; padding-bottom: .6rem; }
+  th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-weight: 700; background: color-mix(in srgb, var(--d1) 7%, var(--white)); }
+  td.time { font-family: var(--mono); white-space: nowrap; font-size: .85rem; font-weight: 600; }
+  tr.break td { color: var(--muted); background: var(--paper); }
+  tr.break td:nth-child(2)::before { content: "☕ "; }
+  .table-scroll { overflow-x: auto; }
+
+  .exercise { background: color-mix(in srgb, var(--c) 9%, var(--white)); border-radius: var(--radius); padding: 1.3rem 1.4rem; }
+  .exercise h3 { margin-top: 0; }
+  .exercise h3::before { content: "✍️ "; }
+  pre.code {
+    background:
+      radial-gradient(circle at 1.1rem 1rem, #FF5F57 .3rem, transparent .34rem),
+      radial-gradient(circle at 2.05rem 1rem, #FEBC2E .3rem, transparent .34rem),
+      radial-gradient(circle at 3rem 1rem, #28C840 .3rem, transparent .34rem),
+      var(--code-bg);
+    background-repeat: no-repeat;
+    color: #E8EAF2; border-radius: var(--radius); padding: 2.2rem 1.2rem 1.1rem;
+    font-family: var(--mono); font-size: .82rem; line-height: 1.6; overflow-x: auto; margin: 0;
+  }
+  pre.code code { background: none; padding: 0; color: inherit; }
+  .code-actions { display: flex; gap: .5rem; margin-top: .7rem; }
+  .check { display: inline-flex; gap: .5rem; align-items: center; font-size: .92rem; font-weight: 600; cursor: pointer; background: var(--paper); padding: .45rem .9rem; border-radius: 999px; }
+  .check input { width: 1.1rem; height: 1.1rem; accent-color: var(--d5); }
+
+  /* Informação geral */
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .info-grid > div { background: var(--white); border-radius: var(--radius); padding: 1.4rem; box-shadow: var(--shadow); }
+  .info-grid h3 { margin-top: 0; font-size: 1.1rem; }
+  .info-grid > div:nth-child(1) h3::before { content: "🎒 "; }
+  .info-grid > div:nth-child(2) h3::before { content: "🧑‍🏫 "; }
+  .info-grid > div:nth-child(3) h3::before { content: "💻 "; }
+  .info-grid p, .info-grid li { color: var(--muted); }
+  .eval-table td:last-child { font-family: var(--mono); font-weight: 700; }
+
+  /* Lista de apresentações */
+  .deck-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: .9rem; }
+  .deck-list a {
+    display: flex; flex-direction: column; height: 100%; text-decoration: none; color: var(--ink); font-weight: 400;
+    background: var(--white); border-radius: var(--radius); padding: 1.2rem; box-shadow: var(--shadow);
+    border: 2px solid transparent; transition: transform .15s ease, border-color .15s ease;
+  }
+  .deck-list a:hover { transform: translateY(-3px); border-color: var(--c); }
+  .deck-list .ico { font-size: 1.6rem; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 16px; background: color-mix(in srgb, var(--c) 16%, var(--white)); margin-bottom: .8rem; }
+  .deck-list .n { font-size: .8rem; font-weight: 700; color: var(--muted); }
+  .deck-list .t { display: block; font-weight: 800; margin: .2rem 0 .4rem; line-height: 1.3; }
+  .deck-list .d { display: block; font-size: .86rem; color: var(--muted); }
+  .keys { color: var(--muted); font-size: .92rem; margin-top: 1.5rem; }
+  .keys kbd { font-family: var(--mono); font-size: .85em; background: var(--white); border-radius: 8px; padding: .1em .45em; box-shadow: 0 2px 0 var(--line), 0 0 0 1px var(--line); }
+
+  .note { font-size: .92rem; color: var(--muted); background: var(--white); border-radius: 16px; padding: .9rem 1.1rem; margin-top: 1.5rem; box-shadow: var(--shadow); }
+  .note::before { content: "💡 "; }
+
+  section.block:nth-of-type(even) { background: var(--white); }
+  section.block:nth-of-type(even) .info-grid > div,
+  section.block:nth-of-type(even) .deck-list a { background: var(--paper); box-shadow: none; }
+
+  footer.site { padding: 2.5rem 0 3rem; color: var(--muted); font-size: .9rem; text-align: center; }
+
+  /* Responsivo */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .timeline, .deck-list { grid-template-columns: repeat(3, 1fr); }
+    .cols, .info-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .timeline, .deck-list { grid-template-columns: repeat(2, 1fr); }
+    .pg-body { grid-template-columns: 1fr; }
+    .day-panel { padding: 1.4rem; border-radius: 22px; }
+    .topnav { display: none; }
+    section.block { padding: 3rem 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  /* Impressão: mostra o plano completo */
+  @media print {
+    .topbar, .playground, .timeline, .progress, .hero-actions, #apresentacoes, #materiais, .code-actions, .no-print { display: none !important; }
+    body { background: #fff; font-size: 11pt; }
+    .day-panel { display: block !important; break-inside: auto; page-break-before: always; box-shadow: none; border: 1px solid #999; }
+    .hero { padding: 0; background: none; }
+    section.block { background: #fff !important; }
+  }
+
+  /* Modo escuro (activado por js/tema.js) */
+  .tema-btn { font: inherit; font-size: 1rem; line-height: 1; cursor: pointer; border: 0; background: var(--white); color: var(--ink); border-radius: 999px; padding: .5rem .65rem; box-shadow: var(--shadow); }
+  .topbar-right { display: flex; align-items: center; gap: .5rem; }
+  @media screen {
+    :root[data-tema="escuro"] {
+      --paper: #10131E;
+      --white: #1A1F31;
+      --ink: #E8EAF4;
+      --muted: #A4AAC4;
+      --line: #2B3149;
+      --code-bg: #0B0E18;
+      --code-soft: #2A2950;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+    :root[data-tema="escuro"] .topbar { background: rgba(16,19,30,.85); }
+    :root[data-tema="escuro"] .brand code { background: #E8EAF4; color: #10131E; }
+    :root[data-tema="escuro"] a { color: #A99FF5; }
+    :root[data-tema="escuro"] .timeline .done-mark { color: #4FD1A5; }
+    :root[data-tema="escuro"] .playground { box-shadow: 0 20px 50px rgba(0,0,0,.5), 0 0 0 1px var(--line); }
+    :root[data-tema="escuro"] .deck-list a, :root[data-tema="escuro"] .day-panel { color: var(--ink); }
+    :root[data-tema="escuro"] .deck-list a { font-weight: 400; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><code>&lt;/&gt;</code> Programação Web – Nível Básico</a>
+    <nav class="topnav" aria-label="Navegação principal">
+      <a href="#plano">Plano diário</a>
+      <a href="#apresentacoes">Apresentações</a>
+      <a href="#materiais">Materiais</a>
+      <a href="#projecto">Projecto final</a>
+      <a href="#avaliacao">Avaliação</a>
+      <a href="#riscos">Riscos e premissas</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</div>
+
+<main id="inicio">
+  <!-- HERO com editor ao vivo -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>
+          <span class="tag">&lt;formacao&gt;</span>
+          Programação Web
+          <span class="tag close">&lt;/formacao&gt;</span>
+        </h1>
+        <p class="lead">Em cinco dias, os formandos passam de uma página em branco a um website publicado na Internet, usando HTML, CSS e JavaScript.</p>
+        <dl class="facts">
+          <dt>Carga horária</dt><dd>20 h</dd>
+          <dt>Duração</dt><dd>5 dias</dd>
+          <dt>Por dia</dt><dd>4 h</dd>
+        </dl>
+        <div class="hero-actions">
+          <a class="btn solid" href="apresentacoes/dia-1.html">▶ Começar pelo Dia 1</a>
+          <a class="btn" href="#apresentacoes">Todas as apresentações</a>
+        </div>
+      </div>
+
+      <div class="playground" aria-label="Editor de código ao vivo">
+        <div class="pg-head">
+          <span>Experimente: altere o código</span>
+          <button class="btn" id="pg-reset" type="button">Repor exemplo</button>
+        </div>
+        <div class="pg-body">
+          <label for="pg-code" class="sr-only" style="position:absolute;left:-9999px">Código HTML e CSS</label>
+          <textarea id="pg-code" spellcheck="false"></textarea>
+          <iframe id="pg-view" title="Resultado do código" sandbox="allow-scripts"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJECTIVOS E ENQUADRAMENTO -->
+  <section class="block">
+    <div class="wrap">
+      <h2>Enquadramento da formação</h2>
+      <p class="section-intro">Capacitar os formandos a desenvolver páginas web estáticas utilizando tecnologias base como HTML, CSS e introdução ao JavaScript, aplicando boas práticas do desenvolvimento web.</p>
+      <div class="info-grid">
+        <div>
+          <h3>Pré-requisitos</h3>
+          <ul class="clean">
+            <li>Conhecimentos básicos de informática.</li>
+            <li>Noções básicas de uso de computador e Internet.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Metodologia</h3>
+          <p>Método expositivo-demonstrativo (30%) e método activo com prática orientada (70%). Cada conceito é demonstrado pelo formador e logo aplicado num exercício pelos formandos.</p>
+        </div>
+        <div>
+          <h3>Recursos necessários</h3>
+          <ul class="clean">
+            <li>1 computador por formando, com VS Code e navegador actualizado.</li>
+            <li>Projector e ligação à Internet.</li>
+            <li>Conta de e-mail pessoal para o GitHub (Dia 5).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANO DIÁRIO -->
+  <section class="block" id="plano">
+    <div class="wrap">
+      <h2>Plano de aula por dia</h2>
+      <p class="section-intro">Seleccione um dia para ver o horário, os objectivos, o exercício prático e o exemplo de código. Horário proposto: 08:00 às 12:15, com 15 minutos de intervalo (4 horas efectivas).</p>
+
+      <ol class="timeline" role="tablist" id="timeline"></ol>
+
+      <div class="progress no-print">
+        <span id="progress-label">0 de 5 dias concluídos</span>
+        <div class="bar" aria-hidden="true"><div class="fill" id="progress-fill"></div></div>
+        <button class="btn" type="button" onclick="window.print()">Imprimir plano completo</button>
+      </div>
+
+      <div id="panels"></div>
+    </div>
+  </section>
+
+  <!-- APRESENTAÇÕES -->
+  <section class="block" id="apresentacoes">
+    <div class="wrap">
+      <h2>Apresentações</h2>
+      <p class="section-intro">Uma apresentação por dia, para projectar em sala. Os exemplos de código podem ser executados no próprio diapositivo e cada apresentação inclui perguntas de revisão, o exercício do dia e notas para o formador.</p>
+      <ul class="deck-list">
+        <li><a href="apresentacoes/dia-1.html" style="--c: var(--d1)"><span class="ico" aria-hidden="true">🌐</span><span class="n">Dia 1</span><span class="t">Como a Web funciona e a primeira página</span><span class="d">Internet, cliente e servidor, ferramentas, estrutura HTML, links e imagens</span></a></li>
+        <li><a href="apresentacoes/dia-2.html" style="--c: var(--d2)"><span class="ico" aria-hidden="true">🧱</span><span class="n">Dia 2</span><span class="t">HTML completo e os primeiros estilos</span><span class="d">Listas, tabelas, formulários, semântica, seletores, cores e fontes</span></a></li>
+        <li><a href="apresentacoes/dia-3.html" style="--c: var(--d3)"><span class="ico" aria-hidden="true">🎨</span><span class="n">Dia 3</span><span class="t">Layout e design responsivo</span><span class="d">Box model, Flexbox, Grid e media queries</span></a></li>
+        <li><a href="apresentacoes/dia-4.html" style="--c: var(--d4)"><span class="ico" aria-hidden="true">⚡</span><span class="n">Dia 4</span><span class="t">Interactividade com JavaScript</span><span class="d">Variáveis, condicionais, funções, DOM, eventos e briefing do projecto</span></a></li>
+        <li><a href="apresentacoes/dia-5.html" style="--c: var(--d5)"><span class="ico" aria-hidden="true">🚀</span><span class="n">Dia 5</span><span class="t">Publicação e projecto final</span><span class="d">Hospedagem, estrutura de ficheiros, GitHub Pages e apresentações</span></a></li>
+      </ul>
+      <p class="keys">Durante a apresentação: <kbd>←</kbd> <kbd>→</kbd> para navegar, <kbd>I</kbd> para o índice, <kbd>N</kbd> para as notas do formador, <kbd>F</kbd> para ecrã inteiro. Em telemóvel, deslize para os lados.</p>
+    </div>
+  </section>
+
+  <!-- MATERIAIS DE APOIO -->
+  <section class="block" id="materiais">
+    <div class="wrap">
+      <h2>Materiais de apoio</h2>
+      <p class="section-intro">Ficheiros para os formandos e para o formador, com a mesma identidade visual do plano. Todos podem ser impressos em A4.</p>
+      <ul class="deck-list">
+        <li><a href="materiais/exercicios.html" style="--c: var(--d2)"><span class="ico" aria-hidden="true">✍️</span><span class="n">Formando</span><span class="t">Caderno de exercícios</span><span class="d">Enunciados, critérios de correcção e ficheiros de início e solução dos exercícios 1 a 4</span></a></li>
+        <li><a href="materiais/referencia-rapida.html" style="--c: var(--d3)"><span class="ico" aria-hidden="true">📌</span><span class="n">Formando</span><span class="t">Referência rápida</span><span class="d">HTML, CSS, JavaScript e publicação numa só página</span></a></li>
+        <li><a href="projecto-exemplo/index.html" style="--c: var(--d5)"><span class="ico" aria-hidden="true">🍲</span><span class="n">Formando</span><span class="t">Projecto exemplo</span><span class="d">Website completo de referência (Restaurante Kianda) que cumpre todos os requisitos</span></a></li>
+        <li><a href="materiais/guia-formador.html" style="--c: var(--d1)"><span class="ico" aria-hidden="true">🧑‍🏫</span><span class="n">Formador</span><span class="t">Guia do formador</span><span class="d">Preparação, erros frequentes por dia, gestão da turma e contingências</span></a></li>
+        <li><a href="materiais/avaliacao-final.html" style="--c: var(--d4)"><span class="ico" aria-hidden="true">📝</span><span class="n">Avaliação</span><span class="t">Teste final</span><span class="d">Teste de 20 perguntas com correcção automática e chave de respostas</span></a></li>
+      </ul>
+      <p class="keys">Também disponível: <a href="materiais/grelha-avaliacao.html">grelha de avaliação do projecto e de observação diária</a>.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTO FINAL -->
+  <section class="block" id="projecto">
+    <div class="wrap">
+      <h2>Projecto final</h2>
+      <p class="section-intro">Cada formando desenvolve e publica um website completo, com pelo menos três páginas ou secções. O briefing é feito no final do Dia 4 e o desenvolvimento ocorre no Dia 5.</p>
+      <div class="cols">
+        <div>
+          <h3>Temas sugeridos</h3>
+          <ul class="clean">
+            <li>Portfólio pessoal ou currículo online.</li>
+            <li>Página de um negócio local (restaurante, salão, oficina).</li>
+            <li>Página de divulgação de um evento.</li>
+            <li>Website de uma associação, igreja, clube ou escola.</li>
+            <li>Tema livre, validado pelo formador.</li>
+          </ul>
+          <p><a href="projecto-exemplo/index.html">Ver o projecto exemplo (Restaurante Kianda)</a></p>
+        </div>
+        <div>
+          <h3>Requisitos mínimos</h3>
+          <ul class="clean">
+            <li>Estrutura semântica (<code>header</code>, <code>nav</code>, <code>main</code>, <code>footer</code>).</li>
+            <li>Imagens com texto alternativo, uma lista e um formulário.</li>
+            <li>CSS externo com Flexbox ou Grid.</li>
+            <li>Adaptação a telemóvel com pelo menos uma media query.</li>
+            <li>Uma interacção em JavaScript (ex.: validação, menu, modo escuro).</li>
+            <li>Publicação no GitHub Pages com link funcional.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVALIAÇÃO -->
+  <section class="block" id="avaliacao">
+    <div class="wrap">
+      <h2>Avaliação</h2>
+      <p class="section-intro">Proposta de ponderação, a validar com a coordenação pedagógica da entidade formadora.</p>
+      <div class="cols">
+        <div class="table-scroll">
+          <table class="eval-table">
+            <caption>Ponderação da avaliação final</caption>
+            <thead><tr><th>Componente</th><th>Instrumento</th><th>Peso</th></tr></thead>
+            <tbody>
+              <tr><td>Participação e assiduidade</td><td>Grelha de observação</td><td>20%</td></tr>
+              <tr><td>Exercícios diários</td><td>Entrega dos exercícios 1 a 4</td><td>30%</td></tr>
+              <tr><td>Projecto final</td><td>Website publicado e apresentação</td><td>50%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <caption>Critérios do projecto final</caption>
+            <thead><tr><th>Critério</th><th>Peso</th></tr></thead>
+            <tbody>
+              <tr><td>HTML semântico e organização de ficheiros</td><td>20%</td></tr>
+              <tr><td>CSS, layout e design responsivo</td><td>30%</td></tr>
+              <tr><td>Interactividade com JavaScript</td><td>20%</td></tr>
+              <tr><td>Publicação online funcional</td><td>15%</td></tr>
+              <tr><td>Apresentação oral</td><td>15%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RISCOS -->
+  <section class="block" id="riscos">
+    <div class="wrap">
+      <h2>Riscos, premissas e dependências</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Tipo</th><th>Descrição</th><th>Mitigação</th></tr></thead>
+          <tbody>
+            <tr><td>Risco</td><td>Ritmos de aprendizagem diferentes entre formandos.</td><td>Exercícios com nível base e desafio extra; formandos mais rápidos apoiam colegas.</td></tr>
+            <tr><td>Risco</td><td>Falha de Internet no dia da publicação.</td><td>Ter rede alternativa (hotspot) e permitir publicar após a sessão, com prazo definido.</td></tr>
+            <tr><td>Risco</td><td>Computadores sem permissão para instalar software.</td><td>Confirmar com a área de TI antes do Dia 1; alternativa: editor online (ex.: CodePen).</td></tr>
+            <tr><td>Premissa</td><td>Cada formando dispõe de um computador durante as 20 horas.</td><td>Validar a sala e o equipamento na véspera.</td></tr>
+            <tr><td>Dependência</td><td>Conta pessoal no GitHub, criada pelo próprio formando.</td><td>Pedir a criação da conta como trabalho de casa no Dia 4.</td></tr>
+            <tr><td>Conformidade</td><td>Uso de imagens e textos de terceiros nos projectos.</td><td>Usar conteúdo próprio ou de bancos livres de direitos; não publicar dados pessoais de terceiros.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">Este plano é uma proposta. Horários, pesos de avaliação e temas devem ser validados pelo formador e pela coordenação antes da execução.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">Programação Web – Nível Básico. Plano de formação de 20 horas em 5 dias.</div>
+</footer>
+
+<script>
+/* ---------- Conteúdo dos 5 dias ---------- */
+const days = [
+  {
+    color: "var(--d1)",
+    icon: "🌐",
+    title: "Como a Web funciona e a primeira página",
+    short: "Web e HTML inicial",
+    modules: ["Módulo 1: Introdução à Web", "Módulo 2: HTML5 (início)"],
+    objectives: [
+      "Explicar a diferença entre Internet e Web.",
+      "Descrever a comunicação entre cliente e servidor (pedido e resposta).",
+      "Configurar o VS Code e usar as ferramentas de programador do navegador.",
+      "Criar uma página HTML com a estrutura básica e tags essenciais."
+    ],
+    schedule: [
+      ["08:00–08:30", "Abertura: apresentação, expectativas e objectivos da formação", "Dinâmica de grupo"],
+      ["08:30–09:15", "O que é a Internet e a Web; URL, DNS e HTTP; cliente vs servidor", "Expositivo com diagrama"],
+      ["09:15–09:45", "Navegadores e servidores; inspeccionar uma página real com as DevTools", "Demonstração"],
+      ["09:45–10:00", "Intervalo", ""],
+      ["10:00–10:30", "Instalar VS Code e a extensão Live Server; criar a pasta do projecto", "Prática guiada"],
+      ["10:30–11:15", "Introdução ao HTML e estrutura básica de uma página", "Demonstração e prática"],
+      ["11:15–12:00", "Tags essenciais: títulos, parágrafos, links e imagens", "Prática guiada"],
+      ["12:00–12:15", "Revisão do dia e perguntas rápidas", "Questionário oral"]
+    ],
+    exercise: {
+      title: "Exercício 1: Cartão de apresentação",
+      text: "Criar a página sobre-mim.html com um título com o nome, uma fotografia (com atributo alt), dois parágrafos de apresentação e três links (e-mail, rede social e um site favorito)."
+    },
+    code: `<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre mim</title>
+</head>
+<body>
+  <h1>Ana Silva</h1>
+  <img src="foto.jpg" alt="Fotografia de Ana Silva" width="200">
+  <p>Sou estudante de informática em Luanda.</p>
+  <p>Gosto de fotografia e de tecnologia.</p>
+  <a href="mailto:ana@exemplo.com">Enviar e-mail</a>
+</body>
+</html>`
+  },
+  {
+    color: "var(--d2)",
+    icon: "🧱",
+    title: "HTML completo e os primeiros estilos",
+    short: "HTML e CSS inicial",
+    modules: ["Módulo 2: HTML5 (conclusão)", "Módulo 3: CSS3 (início)"],
+    objectives: [
+      "Organizar informação com listas e tabelas.",
+      "Construir formulários com campos, botões e validação básica do HTML5.",
+      "Aplicar elementos semânticos e boas práticas de acessibilidade.",
+      "Ligar uma folha de estilos e usar seletores, cores, fontes e espaçamentos."
+    ],
+    schedule: [
+      ["08:00–08:15", "Revisão do Dia 1 e correcção do exercício", "Discussão"],
+      ["08:15–09:00", "Listas (ul, ol) e tabelas (table, tr, th, td)", "Demonstração e prática"],
+      ["09:00–09:45", "Formulários: input, label, select, textarea, button; required, type e pattern", "Prática guiada"],
+      ["09:45–10:00", "Intervalo", ""],
+      ["10:00–10:30", "HTML semântico: header, nav, main, section, article, footer", "Expositivo e comparação"],
+      ["10:30–11:00", "Introdução ao CSS: inline, interno e externo; sintaxe", "Demonstração"],
+      ["11:00–11:45", "Seletores (elemento, classe, id, descendente, :hover) e propriedades", "Prática guiada"],
+      ["11:45–12:15", "Cores, fontes e espaçamentos; início do exercício", "Prática autónoma"]
+    ],
+    exercise: {
+      title: "Exercício 2: Página de inscrição",
+      text: "Criar uma página semântica de inscrição na formação, com uma lista dos módulos, uma tabela de horários e um formulário (nome, e-mail, telefone e área de interesse) com campos obrigatórios. Estilizar com um ficheiro estilo.css externo."
+    },
+    code: `<form>
+  <label for="nome">Nome completo</label>
+  <input type="text" id="nome" name="nome" required>
+
+  <label for="email">E-mail</label>
+  <input type="email" id="email" name="email" required>
+
+  <button type="submit">Enviar inscrição</button>
+</form>
+
+/* estilo.css */
+body { font-family: Arial, sans-serif; color: #222; }
+label { display: block; margin-top: 12px; }
+button { background: #e44d26; color: white; padding: 8px 16px; }`
+  },
+  {
+    color: "var(--d3)",
+    icon: "🎨",
+    title: "Layout e design responsivo",
+    short: "Layout com CSS",
+    modules: ["Módulo 3: CSS3 (conclusão)"],
+    objectives: [
+      "Explicar e aplicar o box model (content, padding, border, margin).",
+      "Alinhar e distribuir elementos com Flexbox.",
+      "Criar grelhas simples com CSS Grid.",
+      "Adaptar uma página a telemóvel, tablet e computador com media queries."
+    ],
+    schedule: [
+      ["08:00–08:15", "Revisão do Dia 2", "Discussão"],
+      ["08:15–09:00", "Box model e box-sizing; inspecção nas DevTools", "Demonstração e prática"],
+      ["09:00–09:45", "Flexbox: direcção, justify-content, align-items, gap, wrap", "Prática guiada"],
+      ["09:45–10:00", "Intervalo", ""],
+      ["10:00–10:45", "Flexbox aplicado: barra de navegação e linha de cartões", "Prática guiada"],
+      ["10:45–11:30", "Introdução ao Grid: colunas, linhas, fr e gap", "Demonstração e prática"],
+      ["11:30–12:15", "Design responsivo: meta viewport, mobile-first e media queries", "Prática autónoma"]
+    ],
+    exercise: {
+      title: "Exercício 3: Landing page responsiva",
+      text: "Construir uma página com cabeçalho e menu em Flexbox, uma grelha de três serviços em Grid e um rodapé. Em ecrãs com menos de 600px, os serviços ficam numa só coluna (abordagem mobile-first)."
+    },
+    code: `nav ul {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Mobile-first: uma coluna por omissão */
+.servicos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* A partir de 600px: três colunas */
+@media (min-width: 600px) {
+  .servicos { grid-template-columns: repeat(3, 1fr); }
+}`
+  },
+  {
+    color: "var(--d4)",
+    icon: "⚡",
+    title: "Interactividade com JavaScript",
+    short: "JavaScript",
+    modules: ["Módulo 4: Introdução ao JavaScript", "Módulo 6: briefing do projecto"],
+    objectives: [
+      "Explicar o papel do JavaScript numa página web.",
+      "Declarar variáveis e reconhecer os tipos de dados básicos.",
+      "Usar operadores, estruturas condicionais e funções simples.",
+      "Seleccionar e alterar elementos do DOM e reagir a eventos click e submit."
+    ],
+    schedule: [
+      ["08:00–08:15", "Revisão do Dia 3", "Discussão"],
+      ["08:15–08:45", "O que é JavaScript; onde colocar o script; a consola do navegador", "Demonstração"],
+      ["08:45–09:45", "Variáveis (let, const), tipos de dados e operadores", "Prática na consola"],
+      ["09:45–10:00", "Intervalo", ""],
+      ["10:00–10:30", "Estruturas condicionais (if, else if, else)", "Prática guiada"],
+      ["10:30–11:00", "Funções básicas: declarar, parâmetros e retorno", "Prática guiada"],
+      ["11:00–11:45", "DOM: querySelector, textContent, classList; eventos click e submit", "Demonstração e prática"],
+      ["11:45–12:15", "Briefing do projecto final: temas, requisitos e planeamento", "Orientação"]
+    ],
+    exercise: {
+      title: "Exercício 4: Página interactiva",
+      text: "Acrescentar ao formulário do Dia 2 uma validação que mostra uma mensagem se o nome tiver menos de 3 letras, e um botão que alterna entre modo claro e modo escuro. Trabalho de casa: criar conta pessoal no GitHub."
+    },
+    code: `const botao = document.querySelector("#modo");
+botao.addEventListener("click", function () {
+  document.body.classList.toggle("escuro");
+});
+
+const form = document.querySelector("form");
+const aviso = document.querySelector("#aviso");
+form.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  const nome = document.querySelector("#nome").value.trim();
+  if (nome.length < 3) {
+    aviso.textContent = "O nome deve ter pelo menos 3 letras.";
+  } else {
+    aviso.textContent = "Obrigado, " + nome + "!";
+  }
+});`
+  },
+  {
+    color: "var(--d5)",
+    icon: "🚀",
+    title: "Publicação e projecto final",
+    short: "Publicação e projecto",
+    modules: ["Módulo 5: Publicação de Website", "Módulo 6: Projecto Final"],
+    objectives: [
+      "Distinguir domínio, alojamento e site estático.",
+      "Organizar os ficheiros de um projecto web.",
+      "Publicar um website no GitHub Pages.",
+      "Desenvolver, publicar e apresentar o projecto final."
+    ],
+    schedule: [
+      ["08:00–08:20", "Noções de hospedagem: domínio, alojamento, estático vs dinâmico", "Expositivo"],
+      ["08:20–08:30", "Estrutura de ficheiros: index.html, css/, js/, img/; nomes sem espaços nem acentos", "Demonstração"],
+      ["08:30–09:15", "GitHub Pages: criar repositório, carregar ficheiros e activar a publicação", "Prática guiada"],
+      ["09:15–09:45", "Desenvolvimento do projecto final", "Prática autónoma"],
+      ["09:45–10:00", "Intervalo", ""],
+      ["10:00–11:15", "Desenvolvimento e publicação do projecto, com acompanhamento individual", "Prática autónoma"],
+      ["11:15–12:00", "Apresentação dos projectos (cerca de 5 minutos por formando)", "Apresentação oral"],
+      ["12:00–12:15", "Avaliação da formação, próximos passos e encerramento", "Questionário"]
+    ],
+    exercise: {
+      title: "Entrega: projecto final publicado",
+      text: "Cada formando entrega o link do GitHub Pages (https://utilizador.github.io/projecto) e apresenta o website: tema, estrutura, uma decisão de design e a parte em JavaScript."
+    },
+    code: `meu-site/
+├── index.html
+├── sobre.html
+├── contacto.html
+├── css/
+│   └── estilo.css
+├── js/
+│   └── script.js
+└── img/
+    ├── logo.png
+    └── banner.jpg`
+  }
+];
+
+/* ---------- Construção da linha do tempo e dos painéis ---------- */
+const timeline = document.getElementById("timeline");
+const panels = document.getElementById("panels");
+const done = new Set();
+
+function el(tag, attrs = {}, text) {
+  const e = document.createElement(tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+
+days.forEach((d, i) => {
+  // Botão da linha do tempo
+  const li = el("li");
+  const btn = el("button", {
+    role: "tab", id: "tab-" + i, "aria-controls": "panel-" + i,
+    "aria-selected": i === 0 ? "true" : "false", type: "button",
+    style: "--c:" + d.color
+  });
+  btn.append(el("span", { class: "ico", "aria-hidden": "true" }, d.icon));
+  btn.append(el("span", { class: "t" }, "Dia " + (i + 1) + ": " + d.short));
+  btn.append(el("span", { class: "done-mark", id: "mark-" + i }, ""));
+  btn.addEventListener("click", () => selectDay(i));
+  li.append(btn);
+  timeline.append(li);
+
+  // Painel do dia
+  const p = el("article", {
+    class: "day-panel", id: "panel-" + i, role: "tabpanel",
+    "aria-labelledby": "tab-" + i, style: "--c:" + d.color
+  });
+  if (i !== 0) p.hidden = true;
+
+  const head = el("header");
+  const hl = el("div");
+  hl.append(el("p", { class: "day-sub" }, "Dia " + (i + 1) + " de 5, 4 horas"));
+  hl.append(el("h2", {}, d.title));
+  const mods = el("div", { class: "modules" });
+  d.modules.forEach(m => mods.append(el("span", { class: "chip" }, m)));
+  hl.append(mods);
+  head.append(hl);
+
+  const lab = el("label", { class: "check no-print" });
+  const cb = el("input", { type: "checkbox" });
+  cb.addEventListener("change", () => {
+    cb.checked ? done.add(i) : done.delete(i);
+    updateProgress();
+  });
+  lab.append(cb, document.createTextNode("Dia concluído"));
+  const right = el("div", { style: "display:flex;flex-direction:column;gap:.6rem;align-items:flex-end" });
+  const deckLink = el("a", { class: "btn solid no-print", href: "apresentacoes/dia-" + (i + 1) + ".html" }, "▶ Abrir apresentação do Dia " + (i + 1));
+  right.append(deckLink, lab);
+  head.append(right);
+  p.append(head);
+
+  // Objectivos
+  p.append(el("h3", {}, "Objectivos de aprendizagem"));
+  p.append(el("p", { class: "day-sub" }, "No final do dia, o formando deverá ser capaz de:"));
+  const ul = el("ul", { class: "clean" });
+  d.objectives.forEach(o => ul.append(el("li", {}, o)));
+  p.append(ul);
+
+  // Horário
+  p.append(el("h3", {}, "Horário e actividades"));
+  const wrap = el("div", { class: "table-scroll" });
+  const t = el("table");
+  const thead = el("thead");
+  const trh = el("tr");
+  ["Horário", "Conteúdo", "Método"].forEach(h => trh.append(el("th", {}, h)));
+  thead.append(trh); t.append(thead);
+  const tb = el("tbody");
+  d.schedule.forEach(([h, c, m]) => {
+    const tr = el("tr", c === "Intervalo" ? { class: "break" } : {});
+    tr.append(el("td", { class: "time" }, h), el("td", {}, c), el("td", {}, m));
+    tb.append(tr);
+  });
+  t.append(tb); wrap.append(t); p.append(wrap);
+
+  // Exercício e código
+  const cols = el("div", { class: "cols", style: "margin-top:2rem" });
+  const ex = el("div", { class: "exercise" });
+  ex.append(el("h3", {}, d.exercise.title));
+  ex.append(el("p", { style: "margin:0" }, d.exercise.text));
+  const codeBox = el("div");
+  codeBox.append(el("h3", { style: "margin-top:0" }, i === 4 ? "Estrutura de ficheiros" : "Exemplo de código"));
+  const pre = el("pre", { class: "code" });
+  pre.append(el("code", {}, d.code));
+  codeBox.append(pre);
+  const actions = el("div", { class: "code-actions" });
+  const copy = el("button", { class: "btn", type: "button" }, "Copiar código");
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(d.code); copy.textContent = "Copiado"; }
+    catch { copy.textContent = "Seleccione e copie manualmente"; }
+    setTimeout(() => copy.textContent = "Copiar código", 1800);
+  });
+  actions.append(copy);
+  codeBox.append(actions);
+  cols.append(ex, codeBox);
+  p.append(cols);
+
+  panels.append(p);
+});
+
+function selectDay(i) {
+  days.forEach((_, j) => {
+    document.getElementById("tab-" + j).setAttribute("aria-selected", j === i ? "true" : "false");
+    document.getElementById("panel-" + j).hidden = j !== i;
+  });
+}
+
+// Navegação com setas do teclado na linha do tempo
+timeline.addEventListener("keydown", e => {
+  const current = days.findIndex((_, j) => document.getElementById("tab-" + j).getAttribute("aria-selected") === "true");
+  let next = null;
+  if (e.key === "ArrowRight") next = (current + 1) % days.length;
+  if (e.key === "ArrowLeft") next = (current - 1 + days.length) % days.length;
+  if (next !== null) { selectDay(next); document.getElementById("tab-" + next).focus(); }
+});
+
+function updateProgress() {
+  const n = done.size;
+  document.getElementById("progress-label").textContent = n + " de 5 dias concluídos";
+  document.getElementById("progress-fill").style.width = (n / 5 * 100) + "%";
+  days.forEach((_, j) => {
+    document.getElementById("mark-" + j).textContent = done.has(j) ? "Concluído" : "";
+  });
+}
+
+// Antes de imprimir, mostra todos os dias
+window.addEventListener("beforeprint", () => days.forEach((_, j) => document.getElementById("panel-" + j).hidden = false));
+window.addEventListener("afterprint", () => {
+  const sel = days.findIndex((_, j) => document.getElementById("tab-" + j).getAttribute("aria-selected") === "true");
+  selectDay(sel < 0 ? 0 : sel);
+});
+
+/* ---------- Editor ao vivo (hero) ---------- */
+const exemplo = `<style>
+  body { font-family: sans-serif; padding: 16px; }
+  h1 { color: #6C5CE7; }
+  .caixa {
+    background: #FF6B4A;
+    color: white;
+    padding: 12px;
+    border-radius: 14px;
+  }
+</style>
+
+<h1>Olá, Web!</h1>
+<p>Altere este texto à esquerda.</p>
+<div class="caixa">
+  Experimente mudar a cor de fundo.
+</div>`;
+
+const area = document.getElementById("pg-code");
+const view = document.getElementById("pg-view");
+function render() { view.srcdoc = area.value; }
+area.value = exemplo;
+render();
+area.addEventListener("input", render);
+area.addEventListener("keydown", e => {
+  if (e.key === "Tab" && !e.shiftKey) {
+    e.preventDefault();
+    const s = area.selectionStart;
+    area.value = area.value.slice(0, s) + "  " + area.value.slice(area.selectionEnd);
+    area.selectionStart = area.selectionEnd = s + 2;
+    render();
+  }
+});
+document.getElementById("pg-reset").addEventListener("click", () => { area.value = exemplo; render(); });
+</script>
+<script src="js/estado-aulas.js"></script>
+</body>
+</html>

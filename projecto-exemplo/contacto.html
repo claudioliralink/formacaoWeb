@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reservas e contactos do Restaurante Kianda, em Luanda.">
+  <title>Reservas e contactos – Restaurante Kianda</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="contentor">
+      <a class="logo" href="index.html">
+        <img src="img/logo.svg" alt="" width="40" height="40">
+        Restaurante Kianda
+      </a>
+      <button type="button" class="botao-menu" id="botao-menu" aria-expanded="false" aria-controls="menu">☰ Menu</button>
+      <nav aria-label="Navegação principal">
+        <ul class="menu" id="menu">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="contacto.html" class="activo" aria-current="page">Reservas e contactos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="titulo-pagina">
+      <div class="contentor">
+        <h1>Reservas e contactos</h1>
+        <p>Reserve a sua mesa ou fale connosco.</p>
+      </div>
+    </section>
+
+    <section class="seccao">
+      <div class="contentor duas-colunas">
+
+        <!-- ===== Formulário de reserva ===== -->
+        <div>
+          <h2>Pedido de reserva</h2>
+          <form id="form-reserva" class="formulario" novalidate>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" autocomplete="name" required>
+
+            <label for="telefone">Telefone (9 dígitos)</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="9XXXXXXXX" autocomplete="tel" required>
+
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data">
+
+            <label for="pessoas">Número de pessoas</label>
+            <input type="number" id="pessoas" name="pessoas" min="1" max="30" value="2">
+
+            <label for="ocasiao">Ocasião</label>
+            <select id="ocasiao" name="ocasiao">
+              <option>Refeição normal</option>
+              <option>Aniversário</option>
+              <option>Reunião de trabalho</option>
+            </select>
+
+            <label for="mensagem">Observações</label>
+            <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+
+            <button type="submit" class="botao">Pedir reserva</button>
+            <p id="aviso" class="aviso" role="status" aria-live="polite"></p>
+          </form>
+          <p><small>Formulário de demonstração: os dados são verificados no navegador e não são enviados para nenhum servidor.</small></p>
+        </div>
+
+        <!-- ===== Horário e contactos ===== -->
+        <div>
+          <h2>Horário</h2>
+          <table>
+            <caption>Horário de funcionamento</caption>
+            <thead>
+              <tr><th>Dia</th><th>Almoço</th><th>Jantar</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Segunda a sexta</td><td>12:00 – 15:00</td><td>19:00 – 22:00</td></tr>
+              <tr><td>Sábado</td><td>12:00 – 16:00</td><td>19:00 – 23:00</td></tr>
+              <tr><td>Domingo</td><td colspan="2">Encerrado</td></tr>
+            </tbody>
+          </table>
+
+          <h2 style="margin-top:32px">Como chegar</h2>
+          <ul class="vantagens">
+            <li>Rua Exemplo, n.º 10, Baixa de Luanda</li>
+            <li>Telefone: <a href="tel:+244900000000">+244 900 000 000</a></li>
+            <li>E-mail: <a href="mailto:reservas@kianda.exemplo.ao">reservas@kianda.exemplo.ao</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="contentor">
+      <div>
+        <h2>Morada</h2>
+        <p>Rua Exemplo, n.º 10<br>Baixa de Luanda</p>
+      </div>
+      <div>
+        <h2>Horário</h2>
+        <p>Segunda a sábado<br>Almoço e jantar (ver <a href="contacto.html">horário</a>)</p>
+      </div>
+      <div>
+        <h2>Contactos</h2>
+        <p><a href="tel:+244900000000">+244 900 000 000</a><br><a href="mailto:reservas@kianda.exemplo.ao">reservas@kianda.exemplo.ao</a></p>
+      </div>
+      <p class="direitos">© <span id="ano">2026</span> Restaurante Kianda · Projecto exemplo da formação Programação Web – Nível Básico. Negócio, morada e contactos fictícios.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

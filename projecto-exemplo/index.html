@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Restaurante Kianda: cozinha angolana tradicional em Luanda. Projecto exemplo da formação Programação Web – Nível Básico.">
+  <title>Restaurante Kianda – Cozinha angolana em Luanda</title>
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===== Cabeçalho (igual em todas as páginas) ===== -->
+  <header class="cabecalho">
+    <div class="contentor">
+      <a class="logo" href="index.html">
+        <img src="img/logo.svg" alt="" width="40" height="40">
+        Restaurante Kianda
+      </a>
+      <button type="button" class="botao-menu" id="botao-menu" aria-expanded="false" aria-controls="menu">☰ Menu</button>
+      <nav aria-label="Navegação principal">
+        <ul class="menu" id="menu">
+          <li><a href="index.html" class="activo" aria-current="page">Início</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="contacto.html">Reservas e contactos</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== Destaque ===== -->
+    <section class="destaque">
+      <div class="contentor">
+        <div>
+          <h1>Sabores de Angola, servidos com tempo e carinho</h1>
+          <p>Cozinha tradicional angolana no coração de Luanda, desde 2010. Pratos feitos ao momento, com ingredientes frescos do mercado.</p>
+          <div class="botoes">
+            <a class="botao" href="contacto.html">Reservar mesa</a>
+            <a class="botao secundario" href="menu.html">Ver o menu</a>
+          </div>
+        </div>
+        <img src="img/destaque.svg" alt="Ilustração de um prato de muamba com funge, servido numa mesa" width="480" height="360">
+      </div>
+    </section>
+
+    <!-- ===== Pratos em destaque (Grid) ===== -->
+    <section class="seccao">
+      <div class="contentor">
+        <h2>Os favoritos da casa</h2>
+        <div class="grelha">
+          <article class="cartao">
+            <img src="img/prato.svg" alt="Ilustração de muamba de galinha com funge" width="320" height="200">
+            <h3>Muamba de galinha</h3>
+            <p>Galinha cozinhada lentamente em molho de óleo de palma, com quiabos e funge.</p>
+            <span class="preco">6 500 Kz</span>
+          </article>
+          <article class="cartao">
+            <img src="img/entrada.svg" alt="Ilustração de uma salada fresca de abacate e tomate" width="320" height="200">
+            <h3>Salada de abacate</h3>
+            <p>Abacate, tomate, cebola roxa e limão. Leve e fresca para começar.</p>
+            <span class="preco">2 500 Kz</span>
+          </article>
+          <article class="cartao">
+            <img src="img/sobremesa.svg" alt="Ilustração de uma fatia de cocada amarela" width="320" height="200">
+            <h3>Cocada amarela</h3>
+            <p>Doce tradicional de coco e ovos, com um toque de canela.</p>
+            <span class="preco">1 800 Kz</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Sobre nós ===== -->
+    <section class="seccao" id="sobre">
+      <div class="contentor duas-colunas">
+        <div>
+          <h2>Sobre o Kianda</h2>
+          <p>O Kianda nasceu de uma cozinha de família. Hoje recebe quem quer comer bem, sem pressa, num espaço simples e acolhedor.</p>
+          <ul class="vantagens">
+            <li>Ingredientes frescos, comprados todas as manhãs</li>
+            <li>Opções vegetarianas todos os dias</li>
+            <li>Espaço para grupos e eventos até 30 pessoas</li>
+            <li>Entregas na zona da Baixa de Luanda</li>
+          </ul>
+        </div>
+        <img src="img/espaco.svg" alt="Ilustração da sala do restaurante, com mesas de madeira e janelas" width="480" height="300">
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Rodapé (igual em todas as páginas) ===== -->
+  <footer class="rodape">
+    <div class="contentor">
+      <div>
+        <h2>Morada</h2>
+        <p>Rua Exemplo, n.º 10<br>Baixa de Luanda</p>
+      </div>
+      <div>
+        <h2>Horário</h2>
+        <p>Segunda a sábado<br>Almoço e jantar (ver <a href="contacto.html">horário</a>)</p>
+      </div>
+      <div>
+        <h2>Contactos</h2>
+        <p><a href="tel:+244900000000">+244 900 000 000</a><br><a href="mailto:reservas@kianda.exemplo.ao">reservas@kianda.exemplo.ao</a></p>
+      </div>
+      <p class="direitos">© <span id="ano">2026</span> Restaurante Kianda · Projecto exemplo da formação Programação Web – Nível Básico. Negócio, morada e contactos fictícios.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

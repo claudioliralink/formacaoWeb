@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teste final | Programação Web – Nível Básico</title>
+<link rel="stylesheet" href="../css/materiais.css">
+<script src="../js/tema.js"></script>
+<style>
+  .q { background: var(--white); border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 1rem; box-shadow: var(--shadow); break-inside: avoid; }
+  .q legend { font-weight: 700; padding: 0; margin-bottom: .6rem; display: flex; gap: .6rem; }
+  .q legend .n { flex: none; width: 1.8rem; height: 1.8rem; border-radius: 10px; background: color-mix(in srgb, var(--c) 14%, var(--white)); display: grid; place-items: center; font-size: .85rem; }
+  .q fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .q .mod { font-size: .78rem; color: var(--muted); font-weight: 600; margin: 0 0 .3rem; }
+  .opt { display: flex; gap: .6rem; align-items: flex-start; padding: .45rem .7rem; border-radius: 12px; cursor: pointer; margin-bottom: .25rem; border: 2px solid transparent; }
+  .opt:hover { background: var(--paper); }
+  .opt input { margin-top: .3rem; accent-color: var(--c); }
+  .opt.right { border-color: var(--ok); background: #E7F7F0; }
+  .opt.wrong { border-color: var(--bad); background: #FDECEA; }
+  .explain { margin: .6rem 0 0; font-size: .92rem; color: var(--muted); }
+  .explain::before { content: "ℹ️ "; }
+  .result { position: sticky; bottom: 1rem; background: var(--ink); color: #fff; border-radius: 999px; padding: .6rem .7rem .6rem 1.3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; box-shadow: 0 10px 30px rgba(29,35,64,.25); margin: 1.5rem 0 2rem; }
+  .result .btn { box-shadow: none; }
+  .score { font-weight: 800; font-size: 1.1rem; }
+  .student { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
+  .student label { font-weight: 600; font-size: .92rem; display: flex; flex-direction: column; gap: .25rem; flex: 1; min-width: 220px; }
+  .student input { font: inherit; padding: .55rem .8rem; border-radius: 12px; border: 1px solid var(--line); background: var(--white); }
+  .key { display: none; }
+  :root[data-tema="escuro"] .opt.right { background: rgba(79, 209, 165, .14); }
+  :root[data-tema="escuro"] .opt.wrong { background: rgba(255, 138, 122, .14); }
+  :root[data-tema="escuro"] .result { background: #262C44; box-shadow: 0 10px 30px rgba(0,0,0,.5), 0 0 0 1px var(--line); }
+  body.show-key .key { display: block; }
+  @media print {
+    .result { display: none; }
+    .q { box-shadow: none; border: 1px solid var(--line); padding: .6rem .9rem; margin-bottom: .5rem; }
+    .opt { padding: .1rem .4rem; }
+    .student input { border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; }
+  }
+</style>
+</head>
+<body style="--c: var(--d5)">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
+    <nav aria-label="Materiais">
+      <a href="../index.html">Plano</a>
+      <a href="exercicios.html">Exercícios</a>
+      <a href="referencia-rapida.html">Referência rápida</a>
+      <a href="guia-formador.html">Guia do formador</a>
+      <a href="avaliacao-final.html" aria-current="page">Teste final</a>
+      <a href="grelha-avaliacao.html">Grelha de avaliação</a>
+      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">📝 Avaliação de conhecimentos</p>
+      <h1>Teste final</h1>
+      <p class="lead">20 perguntas de escolha múltipla sobre os seis módulos. Cada pergunta tem uma só resposta correcta. Duração sugerida: 20 minutos.</p>
+      <div class="actions">
+        <button class="btn" type="button" onclick="window.print()">Imprimir enunciado</button>
+        <button class="btn" type="button" id="toggle-key" aria-pressed="false">Mostrar chave de respostas (formador)</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="student">
+      <label>Nome do formando <input type="text" autocomplete="off"></label>
+      <label>Data <input type="text" autocomplete="off"></label>
+    </div>
+
+    <form id="teste" novalidate></form>
+
+    <div class="key card accent">
+      <h2 style="margin-top:0">Chave de respostas</h2>
+      <p id="key-list" class="muted"></p>
+      <p class="small">Classificação proposta: 1 ponto por resposta certa (máximo 20). Aprovação sugerida: 14 ou mais (70%).</p>
+    </div>
+
+    <div class="result no-print" role="status" aria-live="polite">
+      <span class="score" id="score">0 de 20 respondidas</span>
+      <span style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn solid" type="button" id="corrigir">Corrigir teste</button>
+        <button class="btn" type="button" id="limpar">Recomeçar</button>
+      </span>
+    </div>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Programação Web – Nível Básico · Teste final</div></footer>
+
+<script>
+/* Perguntas: texto, módulo, opções, índice da correcta (0 = a) e explicação */
+const perguntas = [
+  { m: "Módulo 1", t: "Qual é a diferença entre a Internet e a Web?",
+    o: ["São a mesma coisa com nomes diferentes.", "A Internet é a rede física; a Web é um serviço de páginas que funciona sobre ela.", "A Web é a rede física; a Internet é o navegador.", "A Internet só existe em computadores; a Web só em telemóveis."],
+    c: 1, e: "A Internet é a infra-estrutura de rede; a Web é um dos serviços que a usam, tal como o e-mail." },
+  { m: "Módulo 1", t: "No modelo cliente-servidor, quem é normalmente o cliente?",
+    o: ["O navegador do utilizador.", "O servidor de alojamento.", "O DNS.", "O editor de código."],
+    c: 0, e: "O navegador faz o pedido (cliente) e o servidor responde com os ficheiros." },
+  { m: "Módulo 1", t: "O que faz o DNS?",
+    o: ["Desenha a página no ecrã.", "Guarda as palavras-passe dos sites.", "Traduz um nome de domínio num endereço IP.", "Comprime as imagens."],
+    c: 2, e: "O DNS funciona como uma lista telefónica: converte www.exemplo.ao no endereço IP do servidor." },
+  { m: "Módulo 1", t: "O código de resposta 404 significa:",
+    o: ["Página entregue com sucesso.", "Página não encontrada.", "Erro interno do servidor.", "Página movida para outro endereço."],
+    c: 1, e: "200 = OK, 301 = movido, 404 = não encontrado, 500 = erro do servidor." },
+  { m: "Módulo 2", t: "Onde se coloca o conteúdo visível de uma página HTML?",
+    o: ["Dentro de <head>.", "Dentro de <title>.", "Dentro de <body>.", "Antes de <!DOCTYPE html>."],
+    c: 2, e: "O <head> contém informação sobre a página; o que aparece no ecrã vai no <body>." },
+  { m: "Módulo 2", t: "Qual destas linhas cria correctamente uma imagem acessível?",
+    o: ['<img href="logo.png">', '<img src="logo.png" alt="Logótipo da empresa">', '<image src="logo.png">', '<img alt="logo.png">'],
+    c: 1, e: "O atributo src indica o ficheiro e o alt descreve a imagem para quem não a vê." },
+  { m: "Módulo 2", t: "Que elemento usaria para os passos de uma receita, em que a ordem importa?",
+    o: ["<ul>", "<ol>", "<table>", "<nav>"],
+    c: 1, e: "<ol> cria uma lista numerada; <ul> é para itens sem ordem." },
+  { m: "Módulo 2", t: "Para que serve o atributo for de um <label>?",
+    o: ["Para repetir o campo várias vezes.", "Para ligar o label ao campo com o mesmo id.", "Para tornar o campo obrigatório.", "Para definir a cor do texto."],
+    c: 1, e: "Com for e id iguais, clicar no label coloca o cursor no campo e os leitores de ecrã anunciam o nome correcto." },
+  { m: "Módulo 2", t: "Qual atributo torna um campo de formulário obrigatório?",
+    o: ["needed", "pattern", "required", "validate"],
+    c: 2, e: "required impede o envio enquanto o campo estiver vazio." },
+  { m: "Módulo 2", t: "Que elemento semântico deve conter o menu de navegação?",
+    o: ["<nav>", "<aside>", "<article>", "<div>"],
+    c: 0, e: "<nav> identifica o bloco de navegação principal." },
+  { m: "Módulo 3", t: "Qual é a forma recomendada de aplicar CSS a um site com várias páginas?",
+    o: ["Estilos inline em cada elemento.", "Um bloco <style> em cada página.", "Um ficheiro externo ligado com <link rel=\"stylesheet\">.", "Atributos de cor no HTML."],
+    c: 2, e: "Um ficheiro externo serve todas as páginas e facilita a manutenção." },
+  { m: "Módulo 3", t: "Que seletor CSS escolhe os elementos com class=\"destaque\"?",
+    o: ["#destaque", ".destaque", "destaque", "*destaque"],
+    c: 1, e: "O ponto selecciona classes; o cardinal (#) selecciona ids." },
+  { m: "Módulo 3", t: "Uma caixa tem width: 200px, padding: 10px e border: 5px, sem box-sizing: border-box. Qual é a largura total ocupada (sem margin)?",
+    o: ["200px", "215px", "230px", "250px"],
+    c: 2, e: "200 + 10 + 10 + 5 + 5 = 230px. Com border-box, seriam 200px." },
+  { m: "Módulo 3", t: "Num contentor flex com a direcção por omissão, que propriedade distribui os itens na horizontal?",
+    o: ["align-items", "justify-content", "text-align", "float"],
+    c: 1, e: "justify-content trabalha no eixo principal (horizontal em row)." },
+  { m: "Módulo 3", t: "O que faz grid-template-columns: repeat(3, 1fr)?",
+    o: ["Cria três linhas de altura igual.", "Cria três colunas de largura igual.", "Repete o elemento três vezes.", "Cria uma coluna com 3 píxeis."],
+    c: 1, e: "1fr é uma fracção do espaço livre; repeat(3, 1fr) dá três colunas iguais." },
+  { m: "Módulo 3", t: "Numa abordagem mobile-first, que media query acrescenta regras para ecrãs maiores?",
+    o: ["@media (max-width: 600px)", "@media (min-width: 600px)", "@media print", "@media (orientation: portrait)"],
+    c: 1, e: "Escreve-se primeiro o CSS do telemóvel e depois min-width para ecrãs a partir de certa largura." },
+  { m: "Módulo 4", t: "Qual é o resultado de 5 === \"5\" em JavaScript?",
+    o: ["true", "false", "\"55\"", "Erro"],
+    c: 1, e: "=== compara valor e tipo: um é número e o outro é texto." },
+  { m: "Módulo 4", t: "Qual a diferença entre let e const?",
+    o: ["let só guarda texto; const só guarda números.", "O valor de let pode ser alterado; o de const não.", "const é a forma antiga; let é a moderna.", "Não há diferença."],
+    c: 1, e: "Use const por omissão e let quando o valor tiver de mudar." },
+  { m: "Módulo 4", t: "Para que serve evento.preventDefault() num evento submit?",
+    o: ["Para apagar o formulário.", "Para impedir o envio normal e o recarregamento da página.", "Para enviar o formulário duas vezes.", "Para mostrar a consola."],
+    c: 1, e: "Assim o JavaScript pode validar os dados antes de decidir o que fazer." },
+  { m: "Módulo 5", t: "Ao publicar no GitHub Pages, o site mostra erro 404. Qual é a causa mais provável?",
+    o: ["O CSS tem uma cor errada.", "O ficheiro index.html não está na raiz do repositório ou tem maiúsculas (Index.html).", "Faltam comentários no código.", "O navegador é antigo."],
+    c: 1, e: "O GitHub Pages procura index.html, em minúsculas, na raiz (ou na pasta configurada)." }
+];
+
+/* Baralha as opções de forma fixa (sempre a mesma ordem), para equilibrar a posição
+   da resposta certa e manter o enunciado impresso igual à chave de respostas. */
+let semente = 100;
+function aleatorio() { semente = (semente * 9301 + 49297) % 233280; return semente / 233280; }
+perguntas.forEach(p => {
+  const certa = p.o[p.c];
+  for (let k = p.o.length - 1; k > 0; k--) {
+    const r = Math.floor(aleatorio() * (k + 1));
+    [p.o[k], p.o[r]] = [p.o[r], p.o[k]];
+  }
+  p.c = p.o.indexOf(certa);
+});
+
+const letras = ["a", "b", "c", "d"];
+const form = document.getElementById("teste");
+const score = document.getElementById("score");
+
+/* Constrói o teste */
+perguntas.forEach((p, i) => {
+  const box = document.createElement("div");
+  box.className = "q";
+  const fs = document.createElement("fieldset");
+  const lg = document.createElement("legend");
+  const n = document.createElement("span");
+  n.className = "n"; n.textContent = i + 1;
+  const tx = document.createElement("span");
+  tx.textContent = p.t;
+  lg.append(n, tx);
+  const mod = document.createElement("p");
+  mod.className = "mod"; mod.textContent = p.m;
+  fs.append(lg, mod);
+  p.o.forEach((op, j) => {
+    const lab = document.createElement("label");
+    lab.className = "opt";
+    const inp = document.createElement("input");
+    inp.type = "radio"; inp.name = "q" + i; inp.value = j;
+    const s = document.createElement("span");
+    s.textContent = letras[j] + ") " + op;
+    lab.append(inp, s);
+    fs.append(lab);
+  });
+  const ex = document.createElement("p");
+  ex.className = "explain"; ex.hidden = true; ex.textContent = p.e;
+  fs.append(ex);
+  box.append(fs);
+  form.append(box);
+});
+
+/* Chave de respostas */
+document.getElementById("key-list").textContent =
+  perguntas.map((p, i) => (i + 1) + " – " + letras[p.c]).join(" · ");
+const tk = document.getElementById("toggle-key");
+tk.addEventListener("click", () => {
+  const on = document.body.classList.toggle("show-key");
+  tk.setAttribute("aria-pressed", String(on));
+  tk.textContent = on ? "Esconder chave de respostas" : "Mostrar chave de respostas (formador)";
+});
+
+/* Contagem de respostas */
+function respondidas() {
+  return perguntas.filter((_, i) => form.querySelector('input[name="q' + i + '"]:checked')).length;
+}
+form.addEventListener("change", () => {
+  if (!form.classList.contains("corrigido")) score.textContent = respondidas() + " de 20 respondidas";
+});
+
+/* Correcção */
+document.getElementById("corrigir").addEventListener("click", () => {
+  let certas = 0;
+  perguntas.forEach((p, i) => {
+    const opts = form.querySelectorAll('input[name="q' + i + '"]');
+    opts.forEach((inp, j) => {
+      const lab = inp.closest(".opt");
+      lab.classList.remove("right", "wrong");
+      if (j === p.c) lab.classList.add("right");
+      if (inp.checked && j !== p.c) lab.classList.add("wrong");
+      if (inp.checked && j === p.c) certas++;
+      inp.disabled = true;
+    });
+    opts[0].closest("fieldset").querySelector(".explain").hidden = false;
+  });
+  form.classList.add("corrigido");
+  const pct = Math.round(certas / perguntas.length * 100);
+  score.textContent = "Resultado: " + certas + " / 20 (" + pct + "%) – " + (pct >= 70 ? "Aprovado" : "Rever os conteúdos");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("limpar").addEventListener("click", () => {
+  form.reset();
+  form.classList.remove("corrigido");
+  form.querySelectorAll(".opt").forEach(l => l.classList.remove("right", "wrong"));
+  form.querySelectorAll("input").forEach(i => i.disabled = false);
+  form.querySelectorAll(".explain").forEach(e => e.hidden = true);
+  score.textContent = "0 de 20 respondidas";
+});
+</script>
+</body>
+</html>

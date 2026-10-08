@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia do formador | Programação Web – Nível Básico</title>
+<link rel="stylesheet" href="../css/materiais.css">
+<script src="../js/tema.js"></script>
+</head>
+<body style="--c: var(--d1)">
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><code>&lt;/&gt;</code> Programação Web</a>
+    <nav aria-label="Materiais">
+      <a href="../index.html">Plano</a>
+      <a href="exercicios.html">Exercícios</a>
+      <a href="referencia-rapida.html">Referência rápida</a>
+      <a href="guia-formador.html" aria-current="page">Guia do formador</a>
+      <a href="avaliacao-final.html">Teste final</a>
+      <a href="grelha-avaliacao.html">Grelha de avaliação</a>
+      <a href="../projecto-exemplo/index.html">Projecto exemplo</a>
+    </nav>
+    <button class="tema-btn" data-tema-botao></button>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="kicker">🧑‍🏫 Uso interno do formador</p>
+      <h1>Guia do formador</h1>
+      <p class="lead">Preparação, condução e contingências das 5 sessões. Complementa o plano de formação e as notas incluídas em cada apresentação (tecla <kbd>N</kbd>).</p>
+      <ul class="toc">
+        <li><a href="#enquadramento">Enquadramento</a></li>
+        <li><a href="#preparacao">Preparação</a></li>
+        <li><a href="#dias">Condução por dia</a></li>
+        <li><a href="#turma">Gestão da turma</a></li>
+        <li><a href="#contingencias">Contingências</a></li>
+        <li><a href="#conformidade">Segurança e conformidade</a></li>
+        <li><a href="#aceitacao">Critérios de sucesso</a></li>
+        <li><a href="#acesso">Acesso às aulas</a></li>
+      </ul>
+      <div class="actions"><button class="btn" type="button" onclick="window.print()">Imprimir guia</button></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section id="enquadramento">
+      <h2>1. Enquadramento</h2>
+      <div class="table-scroll">
+        <table>
+          <tbody>
+            <tr><th style="width:24%">Objectivo</th><td>Capacitar os formandos a desenvolver páginas web estáticas com HTML, CSS e introdução ao JavaScript, aplicando boas práticas do desenvolvimento web.</td></tr>
+            <tr><th>Âmbito</th><td>Módulos 1 a 6 do programa: Web, HTML5, CSS3, JavaScript introdutório, publicação e projecto final. <strong>Fora do âmbito:</strong> programação no servidor, bases de dados, frameworks e Git na linha de comandos.</td></tr>
+            <tr><th>Carga e formato</th><td>20 horas em 5 dias; sessões de 4 horas (08:00–12:15, com 15 minutos de intervalo). Proporção sugerida: 30% exposição, 70% prática.</td></tr>
+            <tr><th>Público</th><td>Pessoas com conhecimentos básicos de informática e de uso da Internet. Não é necessária experiência em programação.</td></tr>
+            <tr><th>Produto final</th><td>Um website de pelo menos três páginas ou secções, publicado no GitHub Pages e apresentado oralmente.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="preparacao">
+      <h2>2. Preparação</h2>
+      <div class="grid2">
+        <div class="card accent">
+          <h3>Uma semana antes</h3>
+          <ul class="checklist">
+            <li>Confirmar a lista de formandos e enviar a convocatória com horário e local.</li>
+            <li>Confirmar com a área de TI: VS Code e Live Server instalados, ou permissão para instalar.</li>
+            <li>Confirmar que <code>github.com</code>, <code>fonts.googleapis.com</code> e <code>developer.mozilla.org</code> não estão bloqueados na rede.</li>
+            <li>Rever as apresentações e testar todos os exemplos com o botão <em>Ver resultado</em>.</li>
+            <li>Preparar uma conta GitHub de formador para a demonstração do Dia 5.</li>
+            <li>Validar pesos de avaliação e temas com a coordenação pedagógica.</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Véspera e primeiro dia</h3>
+          <ul class="checklist">
+            <li>Testar projector, som e resolução (as apresentações adaptam-se a qualquer ecrã).</li>
+            <li>Testar a Internet da sala e identificar uma alternativa (hotspot).</li>
+            <li>Copiar a pasta da formação para uma pen USB (cópia de segurança offline).</li>
+            <li>Confirmar no site publicado que cada aula mostra a contagem decrescente e que o código do formador a desbloqueia.</li>
+            <li>Preparar a folha de presenças e a grelha de observação.</li>
+            <li>Ter a referência rápida impressa (uma por formando) ou partilhada em formato digital.</li>
+          </ul>
+        </div>
+      </div>
+      <h3>Estrutura da pasta da formação</h3>
+      <pre class="code"><code>formacao-web-basico/
+├── index.html                ← plano de formação (ponto de entrada)
+├── apresentacoes/            ← dia-1.html … dia-5.html
+├── exercicios/               ← dia-N/inicio e dia-N/solucao
+├── materiais/                ← exercícios, referência, guia, teste, grelha
+├── projecto-exemplo/         ← website de referência para o Módulo 6
+├── css/  js/                 ← estilos e motor das apresentações
+</code></pre>
+    </section>
+
+    <section id="dias">
+      <h2>3. Condução por dia</h2>
+
+      <div class="card accent" style="--c: var(--d1)">
+        <h3>Dia 1 · Como a Web funciona e a primeira página</h3>
+        <div class="grid2">
+          <div>
+            <h4>Pontos-chave</h4>
+            <ul>
+              <li>A analogia casa (HTML = paredes, CSS = decoração, JS = electricidade) acompanha toda a formação.</li>
+              <li>Os formandos escrevem a estrutura HTML à mão uma vez, antes de conhecerem o atalho <code>!</code> + <kbd>Tab</kbd>.</li>
+              <li>Demonstrar as DevTools num site real: separadores Elements e Network.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Erros frequentes</h4>
+            <ul>
+              <li>Ficheiro guardado como <code>.html.txt</code> (extensões ocultas no Windows).</li>
+              <li>Tags por fechar e aspas em falta nos atributos.</li>
+              <li>Caminho da imagem errado ou com maiúsculas diferentes.</li>
+              <li>Live Server aberto numa pasta diferente da do projecto.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card accent" style="--c: var(--d2)">
+        <h3>Dia 2 · HTML completo e os primeiros estilos</h3>
+        <div class="grid2">
+          <div>
+            <h4>Pontos-chave</h4>
+            <ul>
+              <li>Mostrar que clicar no <code>label</code> coloca o cursor no campo.</li>
+              <li>Insistir: a validação HTML ajuda o utilizador, não protege o sistema.</li>
+              <li>A partir deste dia, usar sempre CSS externo.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Erros frequentes</h4>
+            <ul>
+              <li><code>for</code> do label diferente do <code>id</code> do campo.</li>
+              <li>Botões radio com <code>name</code> diferentes (permitem escolher os dois).</li>
+              <li>Esquecer o <code>.</code> no seletor de classe ou o <code>;</code> no fim da declaração.</li>
+              <li><code>href</code> do CSS errado: página sem estilos.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card accent" style="--c: var(--d3)">
+        <h3>Dia 3 · Layout e design responsivo</h3>
+        <div class="grid2">
+          <div>
+            <h4>Pontos-chave</h4>
+            <ul>
+              <li>Usar o painel <em>Computed</em> das DevTools para tornar o box model visível.</li>
+              <li><code>display: flex</code> aplica-se ao <strong>pai</strong>; os filhos é que se alinham.</li>
+              <li>Mobile-first: CSS do telemóvel primeiro, <code>min-width</code> depois.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Erros frequentes</h4>
+            <ul>
+              <li>Aplicar <code>display: flex</code> aos itens em vez do contentor.</li>
+              <li>Esquecer a meta viewport: a media query “não funciona” no telemóvel.</li>
+              <li>Larguras fixas em píxeis que provocam deslocamento horizontal.</li>
+              <li>Media query escrita antes das regras gerais e por elas anulada.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card accent" style="--c: var(--d4)">
+        <h3>Dia 4 · Interactividade com JavaScript</h3>
+        <div class="grid2">
+          <div>
+            <h4>Pontos-chave</h4>
+            <ul>
+              <li>Começar na consola: <code>2 + 2</code>, <code>"Olá" + " mundo"</code>.</li>
+              <li>Ensinar a ler a mensagem de erro e a linha indicada na consola.</li>
+              <li>Fechar o dia com o briefing do projecto e pedir o tema a cada formando.</li>
+              <li>Trabalho de casa: criar a conta pessoal no GitHub.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Erros frequentes</h4>
+            <ul>
+              <li><code>queryselector</code> em vez de <code>querySelector</code>.</li>
+              <li>Script sem <code>defer</code> no <code>head</code>: <code>null</code> ao seleccionar elementos.</li>
+              <li><code>#</code> em falta no seletor de id.</li>
+              <li><code>if (x = 5)</code> em vez de <code>===</code>; <code>"2" + 2</code> a dar <code>"22"</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card accent" style="--c: var(--d5)">
+        <h3>Dia 5 · Publicação e projecto final</h3>
+        <div class="grid2">
+          <div>
+            <h4>Pontos-chave</h4>
+            <ul>
+              <li>Fazer a publicação completa no projector antes de os formandos começarem.</li>
+              <li>Mostrar o <a href="../projecto-exemplo/index.html">projecto exemplo</a> como referência do resultado esperado, sem o apresentar como modelo a copiar.</li>
+              <li>Incentivar uma primeira publicação até às 10:00 e actualizações depois.</li>
+              <li>Controlar o tempo das apresentações: cerca de 5 minutos por formando.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Erros frequentes</h4>
+            <ul>
+              <li>Carregar a pasta em vez do seu conteúdo: <code>index.html</code> fica fora da raiz (erro 404).</li>
+              <li><code>Index.html</code> com maiúscula.</li>
+              <li>Caminhos absolutos do computador (<code>C:\Users\…</code>).</li>
+              <li>Esperar pela publicação: pode demorar alguns minutos; recarregar com <kbd>Ctrl</kbd> + <kbd>F5</kbd>.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout warn">Com mais de 9 formandos, os 45 minutos de apresentações não chegam. Reduza para 3 minutos por pessoa ou peça à coordenação mais 30 minutos.</p>
+      </div>
+    </section>
+
+    <section id="turma">
+      <h2>4. Gestão da turma</h2>
+      <div class="grid3">
+        <div class="card"><h3>Ritmos diferentes</h3><p>Todos os exercícios têm um nível base e um desafio extra. Formandos que terminam cedo apoiam colegas ou avançam no projecto.</p></div>
+        <div class="card"><h3>Ciclo de cada conceito</h3><p>Explicar (5 min) → demonstrar ao vivo (5 min) → praticar (10–15 min) → corrigir em conjunto (5 min).</p></div>
+        <div class="card"><h3>Pedido de ajuda</h3><p>Antes de chamar o formador: ler o erro na consola, comparar com o exemplo do diapositivo, perguntar ao colega do lado.</p></div>
+      </div>
+      <h3>Diferenciação</h3>
+      <ul>
+        <li><strong>Com mais dificuldade:</strong> trabalhar a partir das pastas <code>inicio</code>, que já têm a estrutura; foco nos critérios mínimos.</li>
+        <li><strong>Mais avançados:</strong> desafios extra, acessibilidade (contraste, navegação por teclado), uma segunda interacção em JavaScript.</li>
+      </ul>
+    </section>
+
+    <section id="contingencias">
+      <h2>5. Contingências e plano alternativo</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Situação</th><th>Impacto</th><th>Resposta</th></tr></thead>
+          <tbody>
+            <tr><td>Sem Internet na sala</td><td>Fontes externas e GitHub indisponíveis</td><td>As apresentações e exercícios funcionam offline (as fontes passam para as do sistema). Adiar a publicação; o formando publica até prazo definido e envia o link.</td></tr>
+            <tr><td>Sem permissão para instalar o VS Code</td><td>Sem editor adequado</td><td>Usar o Bloco de Notas com o navegador, ou um editor online (ex.: CodePen) se a política da organização o permitir.</td></tr>
+            <tr><td>Formando sem e-mail pessoal para o GitHub</td><td>Não consegue publicar</td><td>Criar um e-mail pessoal no Dia 4 (com o próprio formando) ou entregar o projecto em pasta ZIP; a publicação é avaliada como “não cumprida” apenas nesse critério.</td></tr>
+            <tr><td>Atraso acumulado no programa</td><td>Dia 5 comprometido</td><td>Reduzir a revisão inicial dos dias 3 e 4; o Exercício 3 pode servir de base ao projecto final.</td></tr>
+            <tr><td>Falha de um computador</td><td>Perda de trabalho</td><td>Guardar o trabalho numa pen ou na nuvem no fim de cada dia; trabalho em pares temporário.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="conformidade">
+      <h2>6. Segurança da informação e conformidade</h2>
+      <ul>
+        <li>Cada formando cria e gere a sua conta GitHub. O formador <strong>nunca</strong> pede, vê ou introduz palavras-passe.</li>
+        <li>Os projectos publicados são públicos: não incluir moradas, números de telefone ou documentos reais de terceiros sem autorização. Nos exemplos, usar dados fictícios (<code>exemplo.ao</code>, <code>+244 900 000 000</code>).</li>
+        <li>Usar apenas imagens próprias, ilustrações criadas pelos formandos ou bancos livres de direitos, indicando a origem quando exigido.</li>
+        <li>As fotografias dos formandos no Exercício 1 são opcionais; um avatar é suficiente.</li>
+        <li>Os dados de avaliação (grelhas e notas) são tratados apenas pela entidade formadora, segundo as suas regras de protecção de dados.</li>
+      </ul>
+    </section>
+
+    <section id="aceitacao">
+      <h2>7. Critérios de sucesso da formação</h2>
+      <p class="muted">Indicadores propostos, a validar com a coordenação pedagógica.</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Indicador</th><th>Meta proposta</th><th>Evidência</th></tr></thead>
+          <tbody>
+            <tr><td>Assiduidade</td><td>≥ 90% das horas</td><td>Folha de presenças</td></tr>
+            <tr><td>Exercícios entregues</td><td>≥ 3 de 4 por formando</td><td>Pastas dos exercícios</td></tr>
+            <tr><td>Projectos publicados</td><td>≥ 80% dos formandos</td><td>Links do GitHub Pages</td></tr>
+            <tr><td>Teste final</td><td>Média ≥ 70%</td><td><a href="avaliacao-final.html">Teste final</a></td></tr>
+            <tr><td>Satisfação</td><td>≥ 4 em 5</td><td>Questionário de avaliação da formação</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="acesso">
+      <h2>8. Acesso às aulas (libertação diária)</h2>
+      <p>No site publicado, a apresentação e os ficheiros do exercício de cada dia estão cifrados e abrem sozinhos às <strong>07:30 (hora de Luanda)</strong> do respectivo dia: Dia 1 a 12/10, Dia 2 a 13/10, Dia 3 a 14/10, Dia 4 a 15/10 e Dia 5 a 16/10. O plano, a referência rápida, os materiais e o projecto exemplo estão sempre acessíveis.</p>
+      <div class="grid2">
+        <div class="card accent">
+          <h3>Código do formador</h3>
+          <ul>
+            <li>Desbloqueia qualquer aula a qualquer momento (para preparar a sessão ou em caso de falha).</li>
+            <li>É pessoal: não o partilhe com os formandos, porque abre todos os dias de uma só vez.</li>
+            <li>Introduza-o no campo “Código do formador” da página bloqueada. Fica válido até fechar o separador.</li>
+          </ul>
+        </div>
+        <div class="card accent">
+          <h3>Se a aula não abrir às 07:30</h3>
+          <ol>
+            <li>Aguarde alguns minutos: o GitHub pode atrasar as tarefas agendadas; a página tenta de novo sozinha a cada minuto.</li>
+            <li>No repositório, abra <strong>Actions &gt; Publicar site e libertar aulas &gt; Run workflow</strong>. A tarefa só liberta aulas cuja data já chegou.</li>
+            <li>Em último caso, projecte a aula com o código do formador.</li>
+          </ol>
+        </div>
+      </div>
+      <p class="small">Instruções completas de publicação: ficheiro <code>PUBLICAR.md</code> na pasta da formação (cópia do formador, não publicada).</p>
+    </section>
+  </div>
+</main>
+
+<footer class="site"><div class="wrap">Programação Web – Nível Básico · Guia do formador</div></footer>
+</body>
+</html>

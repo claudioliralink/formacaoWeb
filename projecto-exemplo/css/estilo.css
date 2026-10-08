@@ -1,0 +1,446 @@
+/* =========================================================
+   Restaurante Kianda – projecto exemplo
+   Formação: Programação Web – Nível Básico
+   Abordagem mobile-first: primeiro o telemóvel, depois
+   as media queries para tablet (600px) e computador (900px).
+   ========================================================= */
+
+/* ---------- 1. Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #2B2118;
+  background: #FFF9F2;
+}
+
+h1, h2, h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2;
+  color: #3E2723;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: #BF360C;
+}
+
+/* Contentor centrado com largura máxima */
+.contentor {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- 2. Cabeçalho e menu (Flexbox) ---------- */
+.cabecalho {
+  background: #3E2723;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.cabecalho .contentor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Botão do menu: só aparece no telemóvel */
+.botao-menu {
+  background: transparent;
+  color: white;
+  border: 2px solid #FFE0B2;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* No telemóvel o menu começa fechado e ocupa a largura toda */
+.menu {
+  display: none;
+  width: 100%;
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+/* A classe "aberto" é colocada pelo JavaScript */
+.menu.aberto {
+  display: block;
+}
+
+.menu a {
+  display: block;
+  padding: 10px 0;
+  color: #FFE0B2;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: white;
+}
+
+.menu a.activo {
+  font-weight: bold;
+}
+
+/* ---------- 3. Botões ---------- */
+.botao {
+  display: inline-block;
+  background: #BF360C;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: #8D2600;
+}
+
+.botao.secundario {
+  background: white;
+  color: #3E2723;
+  border: 2px solid #3E2723;
+}
+
+/* ---------- 4. Secção de destaque (página inicial) ---------- */
+.destaque {
+  background: #FFE0B2;
+  padding: 40px 0;
+}
+
+.destaque .contentor {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+
+.destaque h1 {
+  font-size: 2rem;
+  margin: 0 0 12px;
+}
+
+.destaque p {
+  font-size: 1.1rem;
+  margin: 0 0 20px;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- 5. Secções e cartões (Grid) ---------- */
+.seccao {
+  padding: 48px 0;
+}
+
+.seccao h2 {
+  font-size: 1.7rem;
+  margin-top: 0;
+}
+
+.titulo-pagina {
+  background: #FFE0B2;
+  padding: 32px 0;
+}
+
+.titulo-pagina h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.titulo-pagina p {
+  margin: 8px 0 0;
+}
+
+.grelha {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.cartao {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(62, 39, 35, 0.08);
+}
+
+.cartao h3 {
+  margin: 12px 0 6px;
+}
+
+.cartao p {
+  margin: 0;
+}
+
+.cartao img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  background: #FFF3E0;
+}
+
+.preco {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #BF360C;
+}
+
+/* Lista de vantagens com ícone */
+.vantagens {
+  list-style: none;
+  padding: 0;
+}
+
+.vantagens li {
+  padding-left: 32px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.vantagens li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #2E7D32;
+  font-weight: bold;
+}
+
+/* ---------- 6. Filtro do menu ---------- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.filtros button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid #3E2723;
+  background: white;
+  color: #3E2723;
+  cursor: pointer;
+}
+
+.filtros button.activo {
+  background: #3E2723;
+  color: white;
+}
+
+/* O JavaScript coloca na grelha uma classe com o filtro escolhido.
+   Cada regra esconde os pratos das outras categorias. */
+.grelha.so-pratos .entrada,
+.grelha.so-pratos .sobremesa,
+.grelha.so-entradas .prato,
+.grelha.so-entradas .sobremesa,
+.grelha.so-sobremesas .prato,
+.grelha.so-sobremesas .entrada {
+  display: none;
+}
+
+/* ---------- 7. Tabela de horário ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+caption {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #EFE3D6;
+}
+
+th {
+  background: #3E2723;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- 8. Formulário ---------- */
+.formulario label {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 16px 0 6px;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid #BCAAA4;
+  border-radius: 8px;
+  background: white;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+  outline: 3px solid #FFB74D;
+  border-color: #BF360C;
+}
+
+.formulario .botao {
+  margin-top: 20px;
+}
+
+.aviso {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.aviso.erro {
+  color: #C62828;
+}
+
+.aviso.ok {
+  color: #2E7D32;
+}
+
+/* ---------- 9. Rodapé ---------- */
+.rodape {
+  background: #3E2723;
+  color: #FFE0B2;
+  padding: 32px 0;
+  font-size: 0.95rem;
+}
+
+.rodape .contentor {
+  display: grid;
+  gap: 16px;
+}
+
+.rodape h2 {
+  color: white;
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.rodape p {
+  margin: 0;
+}
+
+.rodape a {
+  color: white;
+}
+
+.direitos {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 16px;
+  font-size: 0.85rem;
+}
+
+/* ---------- 10. Tablet: a partir de 600px ---------- */
+@media (min-width: 600px) {
+  .grelha {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rodape .contentor {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .direitos {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- 11. Computador: a partir de 900px ---------- */
+@media (min-width: 900px) {
+  /* O botão desaparece e o menu fica sempre visível, em linha */
+  .botao-menu {
+    display: none;
+  }
+
+  .menu,
+  .menu.aberto {
+    display: flex;
+    gap: 28px;
+    width: auto;
+    margin: 0;
+  }
+
+  .menu a {
+    border-top: none;
+    padding: 4px 0;
+  }
+
+  .destaque {
+    padding: 72px 0;
+  }
+
+  .destaque .contentor {
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .destaque h1 {
+    font-size: 2.8rem;
+  }
+
+  .grelha {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .duas-colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
